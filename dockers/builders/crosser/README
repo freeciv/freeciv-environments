@@ -1,0 +1,33 @@
+
+ You need to use the very crosser version that freeciv
+ sources expect. This container is for freeciv revisions
+ that expect crosser-2.5.
+
+-------------------------------------------------------------
+
+To create the builder container:
+
+- Dowload crosser win64stack-full.<version>.7z package
+  to input/ directory.
+> ./build_docker.sh [freeciv uid]
+
+The [freeciv uid] is the uid of the freeciv user inside
+the container, defaulting to $UID of the user running
+build_docker.sh script.
+
+-------------------------------------------------------------
+
+If you want to adjust the container after that, you can run
+a shell, with root permissions, inside it:
+> ./docker_shell.sh [srcdir]
+
+Use 'su - freeciv' to switch to the account that usually
+does the build (e.g. to test some build step manually)
+
+-------------------------------------------------------------
+
+The build happens with:
+> ./docker_run.sh [srcdir]
+
+Default for [srdir] is 'src/main' under current directory.
+Note that build happens inside the source tree, and is writing there.

@@ -1,0 +1,37 @@
+
+# Either latest Debian release, or latest Ubuntu LTS release,
+# which ever is newer.
+FROM ubuntu:jammy
+
+MAINTAINER The Freeciv Project
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade --yes && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --yes \
+          p7zip-full \
+          meson \
+          mingw-w64 \
+          pkg-config \
+          gettext \
+          libtolua-dev \
+          nsis \
+          libdouble-conversion3 \
+          libpcre2-16-0 \
+    && DEBIAN_FRONTEND=noninteractive apt-get clean --yes
+
+RUN mkdir /usr/crosser && mkdir /build
+
+COPY input/win64stack-full-2.5.7z /usr/crosser
+
+RUN cd /usr/crosser && \
+    7z x win64stack-full-2.5.7z
+
+COPY input/entry.sh input/freeciv_build.sh input/crosser-ver.sh /build/
+
+ARG FREECIV_UID
+
+RUN adduser --gecos "" --uid ${FREECIV_UID} --disabled-password freeciv
+
+WORKDIR /build
+
+ENTRYPOINT ["/build/entry.sh", "-c", "--"]
