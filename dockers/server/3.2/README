@@ -1,0 +1,5 @@
+1) Place freeciv source tree here as directory named 'src'
+2) Optionally place here file modpacks.txt that has modpack (.mpdl)
+   URLs listed, one per line
+   If the file does not exist, empty one will be created.
+2) Run ./build_and_run.sh

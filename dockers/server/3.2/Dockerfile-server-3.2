@@ -1,0 +1,49 @@
+
+FROM debian:bookworm
+
+MAINTAINER The Freeciv Project version: 3.2
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --yes \
+          meson \
+          pkg-config \
+          libsqlite3-dev \
+          libicu-dev \
+          zlib1g-dev \
+          libcurl4-openssl-dev \
+          gettext \
+          liblzma-dev \
+          libzstd-dev \
+    && DEBIAN_FRONTEND=noninteractive apt-get clean --yes
+
+COPY src /src
+
+RUN mkdir -p /build
+
+WORKDIR /build
+
+RUN meson setup ../src -Dprefix=/ \
+                       -Dclients=[] -Druledit=false -Dfcmp=cli \
+                       -Daudio=false && \
+    ninja && ninja install
+
+RUN adduser --gecos "" --disabled-password freeciv
+
+USER freeciv
+
+WORKDIR /home/freeciv
+
+COPY modpacks.txt /home/freeciv/
+
+RUN echo "#!/bin/sh" > ./mp_installer.sh && \
+    echo "cat ./modpacks.txt |" >> ./mp_installer.sh && \
+    echo "  ( while read URL ; do if ! freeciv-mp-cli -i \"\$URL\" ; then exit 1 ; fi ; done )" \
+      >> ./mp_installer.sh && \
+    chmod +x ./mp_installer.sh && \
+    ./mp_installer.sh
+
+RUN echo "#!/bin/sh" > /home/freeciv/entry.sh && \
+    echo "freeciv-server" >> /home/freeciv/entry.sh && \
+    chmod +x /home/freeciv/entry.sh
+
+ENTRYPOINT ["/home/freeciv/entry.sh"]
