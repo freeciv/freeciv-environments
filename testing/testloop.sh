@@ -38,8 +38,8 @@ ulimit -c 50000
 
 while read RC GAMES_TO_PLAY
 do
-  if [ "x$RC" != "x#" ] ; then
-    if [ "x$GAMES_TO_PLAY" != "x" ] ; then
+  if [ "$RC" != "#" ] ; then
+    if [ "$GAMES_TO_PLAY" != "" ] ; then
       GAMES_PLAYED=0
       if [ $GAMES_TO_PLAY -eq 0 ] ; then
         GAMES_TO_PLAY=100000
@@ -47,7 +47,7 @@ do
       while [ $GAMES_PLAYED -lt $GAMES_TO_PLAY ]
       do
         stdout_log "Running $RC"
-        nice $SRV_CMD -d 1 -l $LOGFILE -r $RC -p $PORT -e $NEW_OPTIONS > /dev/null
+        nice $SRV_CMD -d 1 -l $LOGFILE -r $RC -p $PORT -e -w > /dev/null
         GAMES_PLAYED=$GAMES_PLAYED+1
         TOTAL_GAMES_PLAYED=$TOTAL_GAMES_PLAYED+1
         stdout_log "Game $GAMES_PLAYED/$GAMES_TO_PLAY with $RC finished."
