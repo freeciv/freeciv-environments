@@ -6,7 +6,7 @@ if ! test -f src/common/game.c ; then
 fi
 
 if ! test -f "modpacks.txt" ; then
-  echo "There was not modpacks.txt listing modpacks to install" >&2
+  echo "There is no modpacks.txt listing modpacks to install" >&2
   echo "Creating empty one" >&2
   # Create modpacks.txt with one empty line
   echo > modpacks.txt
