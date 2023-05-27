@@ -40,16 +40,16 @@ cd "$MAINDIR"
 
 if test "$BRANCH" != "S3_0" && test "$BRANCH" != "S3_1" ; then
 
-ls -1 ${BRANCH}/windows/installer_cross/meson/Output/Freeciv-*-setup.exe | ( while read ONAME ; do
+ls -1 ${BRANCH}/windows/installer_cross/meson/output/Freeciv-*-setup.exe | ( while read ONAME ; do
   NNAME=$(echo "$ONAME" | sed "s,-setup.exe,-${SCOMMIT}-setup.exe,")
-  echo "$NNAME" | sed "s,^${BRANCH}/windows/installer_cross/meson/Output/,${BNBR}: crosser/," >> $BRANCH.files
+  echo "$NNAME" | sed "s,^${BRANCH}/windows/installer_cross/meson/output/,${BNBR}: crosser/," >> $BRANCH.files
   mv "$ONAME" "$NNAME"
   mv "$NNAME" "nightly/${BRANCH}/crosser/"
   done )
 
-ls -1 ${BRANCH}/windows/installer_cross/meson/Output/freeciv-*.7z | ( while read ONAME ; do
+ls -1 ${BRANCH}/windows/installer_cross/meson/output/freeciv-*.7z | ( while read ONAME ; do
   NNAME=$(echo "$ONAME" | sed "s,.7z,-${SCOMMIT}.7z,")
-  echo "$NNAME" | sed "s,^${BRANCH}/windows/installer_cross/meson/Output/,${BNBR}: crosser/portable/," >> $BRANCH.files
+  echo "$NNAME" | sed "s,^${BRANCH}/windows/installer_cross/meson/output/,${BNBR}: crosser/portable/," >> $BRANCH.files
   mv "$ONAME" "$NNAME"
   mv "$NNAME" "nightly/${BRANCH}/crosser/portable/"
   done )
