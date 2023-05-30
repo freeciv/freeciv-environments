@@ -26,6 +26,20 @@ prepare_branch_dir()
   )
 }
 
+make_build_dir()
+{
+  (
+    if ! mkdir -p "$1/builds/$2" ; then
+      echo "Failed to create build dir \"$1/builds/$2\"" >&2
+      return 1
+    fi
+
+    cd "$1/builds/$2" || exit 1
+
+    ../../src/configure $3
+  )
+}
+
 if test "$1" = "" || test -e "$1" ; then
   echo "Give name of the root directory to create as parameter." >&2
   echo "It must not exist prior running this script." >&2
@@ -73,3 +87,11 @@ do
     exit 1
   fi
 done
+
+make_build_dir main dev "--enable-debug --enable-client=gtk3.22,gtk4,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres,odbc --enable-ai-static=classic,tex,stub"
+
+make_build_dir S3_2 dev "--enable-debug --enable-client=gtk3.22,gtk4,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres,odbc --enable-ai-static=classic,tex,stub"
+
+make_build_dir S3_1 dev "--enable-debug --enable-client=gtk3.22,gtk4,gtk3,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres,odbc --enable-ai-static=classic,tex,stub"
+
+make_build_dir S3_0 dev "--enable-debug --enable-client=gtk3.22,gtk2,gtk3,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres --enable-ai-static=classic,tex,stub"
