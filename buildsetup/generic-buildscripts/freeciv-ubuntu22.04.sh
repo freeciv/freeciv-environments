@@ -15,21 +15,21 @@
 #
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Ubuntu-22.04 (jammy) version 1.01"
+  echo "Freeciv build script for Ubuntu-22.04 (jammy) version 1.02"
   exit
 fi
 
 if test "$1" = "" || test "$2" = "" ||
    test "$1" = "-h" || test "$1" = "--help" ; then
   echo "Usage: $0 <release> <gui> [main dir=freeciv-genbuild] [download URL]"
-  echo "Supported releases are those of 2.6, 3.0, and 3.1 major versions"  
+  echo "Supported releases are those of 2.6, 3.0, 3.1, and 3.2 major versions"
   echo "Supported guis are 'gtk2', 'gtk3.22', 'gtk3', 'gtk4', 'qt', 'sdl', 'sdl2'"
   echo "URL must point either to tar.bz2 or tar.xz package"
   exit
 fi
 
-REL=$1
-GUI=$2
+REL="$1"
+GUI="$2"
 
 if test "$3" = "" ; then
   MAINDIR="freeciv-genbuild"
@@ -37,11 +37,19 @@ else
   MAINDIR="$3"
 fi
 
-FREECIV_MAJMIN=$(echo $REL | sed 's/\./ /g' | (read MAJOR MINOR PATCH ; echo -n "$MAJOR.$MINOR"))
+FREECIV_MAJMIN="$(echo "$REL" | sed 's/\./ /g' | (read MAJOR MINOR PATCH ; echo -n "$MAJOR.$MINOR"))"
+
+if test "$FREECIV_MAJMIN" = "3.1" ; then
+  if test $(echo "$REL" | sed 's/\./ /g' | (read MAJOR MINOR PATCH EMERG ; echo -n "$PATCH")) -ge 90
+  then
+    FREECIV_MAJMIN="3.2"
+  fi
+fi
 
 if test "$FREECIV_MAJMIN" != "2.6" &&
    test "$FREECIV_MAJMIN" != "3.0" &&
-   test "$FREECIV_MAJMIN" != "3.1" ; then
+   test "$FREECIV_MAJMIN" != "3.1" &&
+   test "$FREECIV_MAJMIN" != "3.2" ; then
   echo "Release '$REL' from unsupported branch. See '$0 --help' for supported options" >&2
   exit 1
 fi
@@ -65,15 +73,26 @@ if test "$GUI" = "sdl" ; then
 fi
 
 if test "$GUI" = "gtk2" ; then
-  if test "$FREECIV_MAJMIN" == "3.1" ; then
+  if test "$FREECIV_MAJMIN" != "2.6" &&
+     test "$FREECIV_MAJMIN" != "3.0" ; then
     echo "gtk2 is not supported gui for freeciv-3.1 or later" >&2
     exit 1
   fi
 fi
 
 if test "$GUI" = "gtk4" ; then
-  if test "$FREECIV_MAJMIN" != "3.1" ; then
+  if test "$FREECIV_MAJMIN" = "2.6" ||
+     test "$FREECIV_MAJMIN" = "3.0" ; then
     echo "gtk4 is not supported gui for freeciv-3.0 or earlier" >&2
+    exit 1
+  fi
+fi
+
+if test "$GUI" = "gtk3" ; then
+  if test "$FREECIV_MAJMIN" != "2.6" &&
+     test "$FREECIV_MAJMIN" != "3.0" &&
+     test "$FREECIV_MAJMIN" != "3.1" ; then
+    echo "gtk3 is not supported gui for freeciv-3.2 or later" >&2
     exit 1
   fi
 fi
@@ -138,7 +157,7 @@ if ! test -f freeciv-$REL.tar.bz2 && ! test -f freeciv-$REL.tar.xz ; then
     URL="$4"
   fi
   if ! wget "$URL" ; then
-    echo "Can't download freeciv release freeciv-$REL." >&2
+    echo "Can't download freeciv release freeciv-$REL from $URL." >&2
     exit 1
   fi
 else
