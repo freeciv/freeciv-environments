@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Linux Manjaro version 1.07"
+  echo "Freeciv build script for Linux Manjaro version 1.08"
   exit
 fi
 
@@ -9,7 +9,7 @@ if test "$1" = "" || test "$2" = "" ||
    test "$1" = "-h" || test "$1" = "--help" ; then
   echo "Usage: $0 <release> <gui> [main dir=freeciv-genbuild] [download URL]"
   echo "Supported releases are those of 2.6, 3.0, 3.1, and 3.2 major versions"  
-  echo "Supported guis are 'gtk2', 'gtk3.22', 'gtk3', 'qt'"
+  echo "Supported guis are 'gtk2', 'gtk3.22', 'gtk3', 'gtk4', 'qt'"
   echo "URL must point either to tar.bz2 or tar.xz package"
   exit
 fi
@@ -43,6 +43,7 @@ fi
 if test "$GUI" != "gtk3.22" &&
    test "$GUI" != "gtk3" &&
    test "$GUI" != "gtk2" &&
+   test "$GUI" != "gtk4" &&
    test "$GUI" != "qt" ; then
   echo "Unsupported gui '$GUI' given. See '$0 --help' for supported options" >&2
   exit 1
@@ -61,6 +62,14 @@ if test "$GUI" = "gtk3" ; then
      test "$FREECIV_MAJMIN" != "3.0" &&
      test "$FREECIV_MAJMIN" != "3.1" ; then
     echo "gtk3 is not supported gui for freeciv-3.2 or later" >&2
+    exit 1
+  fi
+fi
+
+if test "$GUI" = "gtk4" ; then
+  if test "$FREECIV_MAJMIN" = "2.6" ||
+     test "$FREECIV_MAJMIN" = "3.0" ; then
+    echo "gtk4 is not supported gui for freeciv-3.0 or earlier" >&2
     exit 1
   fi
 fi
@@ -170,7 +179,9 @@ if ! cd "builds-$REL/$GUI" ; then
   exit 1
 fi
 
-if test "$GUI" = "gtk2" ; then
+if test "$GUI" = "gtk4" ; then
+  FCMP="gtk4"
+elif test "$GUI" = "gtk2" ; then
   FCMP="gtk2"
 elif test "$GUI" = "qt" ; then
   FCMP="qt"
