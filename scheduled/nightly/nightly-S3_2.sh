@@ -23,11 +23,7 @@ fi
 rm -Rf tarbuild
 rm -Rf docbuild
 rm -Rf windows/installer_cross/meson \
-       windows/installer/cross/autotools \
-       windows/installer_cross/output \
-       windows/installer_cross/meson-install \
-       windows/installer_cross/meson-build-win64* \
-       windows/installer_cross/*.nsi
+       windows/installer/cross/autotools
 
 git checkout translations
 git checkout ChangeLog
