@@ -1,7 +1,7 @@
 
 # Either latest Debian release, or latest Ubuntu LTS release,
 # which ever is newer.
-FROM ubuntu:jammy
+FROM debian:bookworm
 
 MAINTAINER The Freeciv Project
 
