@@ -38,7 +38,23 @@ cd "$DOCKDIR"
 
 cd "$MAINDIR"
 
-if test "$BRANCH" != "S3_0" && test "$BRANCH" != "S3_1" ; then
+if test "${BRANCH}" = "main" ; then
+
+ls -1 ${BRANCH}/platforms/windows/installer_cross/meson/output/Freeciv-*-setup.exe | ( while read ONAME ; do
+  NNAME=$(echo "$ONAME" | sed "s,-setup.exe,-${SCOMMIT}-setup.exe,")
+  echo "$NNAME" | sed "s,^${BRANCH}/platforms/windows/installer_cross/meson/output/,${BNBR}: crosser/," >> $BRANCH.files
+  mv "$ONAME" "$NNAME"
+  mv "$NNAME" "nightly/${BRANCH}/crosser/"
+  done )
+
+ls -1 ${BRANCH}/platforms/windows/installer_cross/meson/output/freeciv-*.7z | ( while read ONAME ; do
+  NNAME=$(echo "$ONAME" | sed "s,.7z,-${SCOMMIT}.7z,")
+  echo "$NNAME" | sed "s,^${BRANCH}/platforms/windows/installer_cross/meson/output/,${BNBR}: crosser/portable/," >> $BRANCH.files
+  mv "$ONAME" "$NNAME"
+  mv "$NNAME" "nightly/${BRANCH}/crosser/portable/"
+  done )
+
+elif test "${BRANCH}" = "S3_2" ; then
 
 ls -1 ${BRANCH}/windows/installer_cross/meson/output/Freeciv-*-setup.exe | ( while read ONAME ; do
   NNAME=$(echo "$ONAME" | sed "s,-setup.exe,-${SCOMMIT}-setup.exe,")
