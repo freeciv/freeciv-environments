@@ -35,7 +35,7 @@ if ! test -x "${SRCDIR}/fc_version" ; then
       exit 1
     fi
 
-    echo "Should I also set up workdirs for stable branches S3_0 ... S3_2 (y/n)?"
+    echo "Should I also set up workdirs for stable branches S3_1 ... S3_2 (y/n)?"
 
     req_wd="unset"
     while test "$req_wd" != "n" && test "$req_wd" != "y"
@@ -50,15 +50,13 @@ if ! test -x "${SRCDIR}/fc_version" ; then
 
     if test "$req_wd" = "y" ; then
       if test -d "${SRCDIR}/../S3_2" ||
-         test -d "${SRCDIR}/../S3_1" ||
-         test -d "${SRCDIR}/../S3_0" ; then
+         test -d "${SRCDIR}/../S3_1" ; then
         echo "Directory by the name of a potential git worktree already exist!" >&2
         exit 1
       fi
       ( cd "${SRCDIR}" || exit 1
         if ! git worktree add ../S3_2 S3_2 ||
-           ! git worktree add ../S3_1 S3_1 ||
-           ! git worktree add ../S3_0 S3_0
+           ! git worktree add ../S3_1 S3_1
         then
           echo "Setting up git worktrees failed!" >&2
           exit 1
