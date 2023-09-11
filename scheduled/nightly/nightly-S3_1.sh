@@ -29,7 +29,11 @@ rm -Rf windows/installer_cross/Output \
 
 git checkout translations
 git checkout ChangeLog
-git pull
+if ! git pull ; then
+  sleep 20
+  # Retry
+  git pull
+fi
 COMMIT="$(git rev-parse HEAD)"
 
 if test "${COMMIT}" = "${OLDCOMMIT}" ; then
