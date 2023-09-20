@@ -15,6 +15,8 @@ cd "${MAINDIR}"
 
 OLDCOMMIT="$(cat ${BRANCH}.commit)"
 
+rm -Rf "nbuild/${BRANCH}"
+
 if ! cd "${MAINDIR}/${BRANCH}" ; then
   echo "Failed to enter \"${MAINDIR}/${BRANCH}\"!" >&2
   exit 1
@@ -38,6 +40,11 @@ if test "${COMMIT}" = "${OLDCOMMIT}" ; then
   exit 0
 fi
 
+if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/flatpak" ; then
+  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/flatpak" >&2
+  exit 1
+fi
+
 echo "${COMMIT}" > "${MAINDIR}/${BRANCH}.commit"
 
 SCOMMIT="$(git rev-parse --short HEAD)"
@@ -46,13 +53,12 @@ SCOMMIT="$(git rev-parse --short HEAD)"
 
 ./scripts/refresh_changelog.sh
 
-if ! cd "${MAINDIR}/${BRANCH}/platforms/flatpak" ; then
-  echo "Failed to enter \"${MAINDIR}/${BRANCH}/platforms/flatpak\"!" >&2
+if ! cd "${MAINDIR}/nbuild/${BRANCH}/flatpak" ; then
+  echo "Failed to enter \"${MAINDIR}/nbuild/${BRANCH}/flatpak\"!" >&2
   exit 1
 fi
 
-rm -Rf build repo
-./build_flatpak.sh
+"${MAINDIR}/${BRANCH}/platforms/flatpak/build_flatpak.sh"
 
 ls -1 *.flatpak | (while read OFPF ; do NFPF=$(echo "${OFPF}" | sed "s/.flatpak/-${SCOMMIT}.flatpak/") ; mv "${OFPF}" "${NFPF}" ; done )
 
@@ -100,9 +106,9 @@ fi
 echo "${BNBR}: tarballs/${NDISTNAME}" >> ${BRANCH}.files
 cp ${BRANCH}/tarbuild/${NDISTNAME} nightly/${BRANCH}/tarballs/
 
-ls -1 ${BRANCH}/platforms/flatpak/*.flatpak |
-  sed "s,^${BRANCH}/platforms/,${BNBR}: ," >> ${BRANCH}.files
-mv ${BRANCH}/platforms/flatpak/*.flatpak nightly/${BRANCH}/flatpak/
+ls -1 "nbuild/${BRANCH}/flatpak/"*.flatpak |
+  sed "s,^nbuild/${BRANCH}/,${BNBR}: ," >> ${BRANCH}.files
+mv "nbuild/${BRANCH}/flatpak/"*.flatpak "nightly/${BRANCH}/flatpak/"
 
 ./crosser-nightly.sh "${DOCKDIR}" "${BRANCH}" "${BNBR}" "${SCOMMIT}"
 
