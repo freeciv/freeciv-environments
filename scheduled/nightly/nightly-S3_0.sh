@@ -52,7 +52,7 @@ if ! cd "${MAINDIR}/${BRANCH}/flatpak" ; then
   exit 1
 fi
 
-rm -Rf build repo
+rm -Rf build repo .flatpak-builder
 ./build_flatpak.sh
 
 ls -1 *.flatpak | (while read OFPF ; do NFPF=$(echo "${OFPF}" | sed "s/.flatpak/-${SCOMMIT}.flatpak/") ; mv "${OFPF}" "${NFPF}" ; done )
