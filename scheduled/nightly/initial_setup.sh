@@ -9,6 +9,7 @@ for BRANCH in main $STABLE_BRANCHES
 do
   if ! mkdir -p "nightly/${BRANCH}/crosser/portable" ||
      ! mkdir -p "nightly/${BRANCH}/flatpak"          ||
+     ! mkdir -p "nightly/${BRANCH}/appimage"         ||
      ! mkdir -p "nightly/${BRANCH}/tarballs"         ||
      ! mkdir -p "nightly/${BRANCH}/translations"
   then

@@ -45,6 +45,11 @@ if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/flatpak" ; then
   exit 1
 fi
 
+if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/appimage" ; then
+  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/appimage" >&2
+  exit 1
+fi
+
 echo "${COMMIT}" > "${MAINDIR}/${BRANCH}.commit"
 
 SCOMMIT="$(git rev-parse --short HEAD)"
@@ -61,6 +66,16 @@ fi
 "${MAINDIR}/${BRANCH}/platforms/flatpak/build_flatpak.sh"
 
 ls -1 *.flatpak | (while read OFPF ; do NFPF=$(echo "${OFPF}" | sed "s/.flatpak/-${SCOMMIT}.flatpak/") ; mv "${OFPF}" "${NFPF}" ; done )
+
+if ! cd "${MAINDIR}/nbuild/${BRANCH}/appimage" ; then
+  echo "Failed to enter \"${MAINDIR}/nbuild/${BRANCH}/appimage\"!" >&2
+  exit 1
+fi
+
+"${MAINDIR}/${BRANCH}/platforms/appimage/build_appimages.sh"
+
+rm -f linuxdeploy-*.AppImage
+ls -1 *.AppImage | (while read OFPF ; do NFPF=$(echo "${OFPF}" | sed "s/.AppImage/-${SCOMMIT}.AppImage/") ; mv "${OFPF}" "${NFPF}" ; done )
 
 if ! cd "${MAINDIR}/${BRANCH}" ; then
   echo "Failed to enter \"${MAINDIR}/${BRANCH}\"!" >&2
@@ -109,6 +124,10 @@ cp ${BRANCH}/tarbuild/${NDISTNAME} nightly/${BRANCH}/tarballs/
 ls -1 "nbuild/${BRANCH}/flatpak/"*.flatpak |
   sed "s,^nbuild/${BRANCH}/,${BNBR}: ," >> ${BRANCH}.files
 mv "nbuild/${BRANCH}/flatpak/"*.flatpak "nightly/${BRANCH}/flatpak/"
+
+ls -1 "nbuild/${BRANCH}/appimage/"*.AppImage |
+  sed "s,^nbuild/${BRANCH}/,${BNBR}: ," >> ${BRANCH}.files
+mv "nbuild/${BRANCH}/appimage/"*.AppImage "nightly/${BRANCH}/appimage/"
 
 ./crosser-nightly.sh "${DOCKDIR}" "${BRANCH}" "${BNBR}" "${SCOMMIT}"
 
