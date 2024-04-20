@@ -1,0 +1,7 @@
+Copy Makefile.template to the directory that you want to be
+the build hierarchy root, under name Makefile. Then adjust
+it by the instructions given inside it.
+
+Finally run
+$ make test
+in that directory.

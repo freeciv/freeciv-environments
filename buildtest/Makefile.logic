@@ -1,0 +1,84 @@
+
+MAKE = make
+
+buildprefix = build_
+configprefix = config_
+bothprefix = both_
+cleanprefix = clean_
+testprefix = test_
+
+mesonprefix = meson_
+ninjaprefix = ninja_
+fullprefix = full_
+ncleanprefix = nclean_
+mtestprefix = mtest_
+
+builds += $(forcebuilds)
+
+buildrules = $(addprefix $(buildprefix), $(builds))
+
+configrules = $(addprefix $(configprefix), $(builds))
+bothrules = $(addprefix $(bothprefix), $(builds))
+testrules = $(addprefix $(testprefix), $(builds))
+
+ninjarules = $(addprefix $(ninjaprefix), $(mesonbuilds))
+
+mesonrules = $(addprefix $(mesonprefix), $(mesonbuilds))
+fullrules = $(addprefix $(fullprefix), $(mesonbuilds))
+mtestrules = $(addprefix $(mtestprefix), $(mesonbuilds))
+
+default : $(buildrules)
+
+all : both
+
+ifeq ($(jobs),)
+jobs = 1
+endif
+
+$(buildprefix)% :
+	$(MAKE) -C $(buildmain)/$* -j $(jobs)
+
+$(ninjaprefix)% :
+	ninja -C $(buildmain)/$* reconfigure
+	ninja -C $(buildmain)/$*
+
+config : $(configrules)
+
+$(cleanprefix)% :
+	(cd $(buildmain)/$* && make distclean)
+
+$(ncleanprefix)% :
+	(cd $(buildmain)/$* && ninja clean)
+
+$(bothprefix)% :
+	-$(MAKE) $(cleanprefix)$*
+	$(MAKE) $(configprefix)$*
+	$(MAKE) $(buildprefix)$*
+
+$(fullprefix)% :
+	-$(MAKE) $(ncleanprefix)$*
+	$(MAKE) $(mesonprefix)$*
+	$(MAKE) $(ninjaprefix)$*
+
+$(testprefix)% :
+	@echo "== Building $* =="
+	@( ORIGCF="$$CFLAGS" ; ORIGCXXF="$$CXXFLAGS" ; echo -n "$(branch) : $(GITREV) : $* : " ; BUILTTIME="$$(date +'%d.%m.%y %H:%M')" ; if $(MAKE) $(bothprefix)$* >/dev/null ; then echo -n Success ; else export CFLAGS="-Wno-error $$ORIGCF" ; export CXXFLAGS="-Wno-error $$ORIGCXXF" ; if $(MAKE) $(bothprefix)$* >/dev/null ; then echo -n Warnings ; else echo -n FAILURE ; fi ; fi ; echo " : $$BUILTTIME" ) >> $(logfile)
+
+$(mtestprefix)% :
+	@echo "== Building $* =="
+	@( export MEXTRA_CONFIG="-Dwerror=true" ; echo -n "$(branch) : $(GITREV) : $* : " ; BUILTTIME="$$(date +'%d.%m.%y %H:%M')" ; if $(MAKE) $(fullprefix)$* >/dev/null ; then echo -n Success ; else export MEXTRA_CONFIG="" ; if $(MAKE) $(fullprefix)$* >/dev/null ; then echo -n Warnings ; else echo -n FAILURE ; fi ; fi ; echo " : $$BUILTTIME" ) >> $(logfile)
+
+wrap_test : $(testrules) $(mtestrules)
+
+test :
+	rm -f $(logfile)
+	@( export GITREV=$$(cd src ; git rev-parse --short HEAD 2>/dev/null) ; $(MAKE) wrap_test )
+
+both : $(bothrules)
+
+full : $(fullrules)
+
+dir_% :
+	mkdir -p $(buildmain)/$*
+
+.PHONY : test

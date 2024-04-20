@@ -1,0 +1,100 @@
+
+buildenv=$$(/usr/share/misc/config.guess)
+defconf=""
+clang_leg_conf="CC=clang CXX=clang++ CXXFLAGS=-std=c++11"
+clangconf="CC=clang CXX=clang++"
+
+clientconfig_% : dir_%
+	( cd $(buildmain)/$* && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=$* --disable-server )
+
+$(configprefix)gtk3 : dir_gtk3
+	( cd $(buildmain)/gtk3 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=gtk3 --enable-fcmp=gtk3)
+
+$(configprefix)gtk3.22 : dir_gtk3.22
+	( cd $(buildmain)/gtk3.22 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=gtk3.22 --enable-fcmp=gtk3)
+
+$(configprefix)gtk4 : dir_gtk4
+	( cd $(buildmain)/gtk4 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=gtk4 --enable-fcmp=gtk4)
+
+$(configprefix)gtk4x : dir_gtk4x
+	( cd $(buildmain)/gtk4x && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=gtk4x --enable-fcmp=gtk4x)
+
+$(configprefix)sdl2 : dir_sdl2
+	( cd $(buildmain)/sdl2 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=sdl2)
+
+$(configprefix)stub : clientconfig_stub
+
+$(configprefix)qt : dir_qt
+	( cd $(buildmain)/qt && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=qt --enable-fcmp=qt)
+
+$(configprefix)qt5 : dir_qt5
+	( cd $(buildmain)/qt5 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=qt --enable-fcmp=qt --with-qtver=qt5)
+
+$(configprefix)qt6 : dir_qt6
+	( cd $(buildmain)/qt6 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=qt --enable-fcmp=qt --with-qtver=qt6)
+
+$(configprefix)qt7 : dir_qt7
+	( cd $(buildmain)/qt7 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=qt --enable-fcmp=qt --with-qtver=qt6x)
+
+$(configprefix)auth : dir_auth
+	( cd $(buildmain)/auth && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-fcdb=sqlite3,mysql )
+
+$(configprefix)ndebug : dir_ndebug
+	( cd $(buildmain)/ndebug && $(srcpath)/autogen.sh $(defconf) --disable-debug --enable-gitrev --enable-client=all)
+
+$(configprefix)c23 : dir_c23
+	( cd $(buildmain)/c23 && $(srcpath)/autogen.sh $(defconf) CFLAGS="-std=c2x" CXXFLAGS="-std=c++23" --disable-debug --enable-gitrev --enable-client=all)
+
+$(configprefix)nonls : dir_nonls
+	( cd $(buildmain)/nonls && $(srcpath)/autogen.sh $(defconf) --enable-debug --disable-nls)
+
+$(configprefix)web : dir_web
+	( cd $(buildmain)/web && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-fcweb --enable-json --enable-client)
+
+$(configprefix)shared : dir_shared
+	( cd $(buildmain)/shared && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-shared --disable-static --enable-client=sdl2,qt,gtk3.22)
+
+$(configprefix)shared31 : dir_shared31
+	( cd $(buildmain)/shared31 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-shared --disable-static --enable-client=gtk3,sdl2,qt,gtk3.22)
+
+$(configprefix)clang31: dir_clang31
+	( cd $(buildmain)/clang31 && $(srcpath)/autogen.sh $(clangconf) $(defconf) --enable-debug --enable-client=gtk3,sdl2,qt,gtk3.22 --enable-fcmp=gtk3,qt,cli)
+
+$(configprefix)clang: dir_clang
+	( cd $(buildmain)/clang && $(srcpath)/autogen.sh $(clangconf) $(defconf) --enable-debug --enable-client=sdl2,qt,gtk3.22 --enable-fcmp=gtk3,qt,cli)
+
+$(mesonprefix)mall31: dir_mall31
+	( cd $(buildmain)/mall31 && meson $(srcpath) -Dack_experimental=true -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22 -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)mqt531: dir_mqt531
+	( cd $(buildmain)/mqt531 && meson $(srcpath) -Dack_experimental=true -Dqtver=qt5 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)mO331: dir_mO331
+	( cd $(buildmain)/mO331 && meson $(srcpath) -Dack_experimental=true -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)mall32: dir_mall32
+	( cd $(buildmain)/mall32 && meson $(srcpath) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)mall: dir_mall
+	( cd $(buildmain)/mall && meson $(srcpath) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
+
+$(mesonprefix)mqt5: dir_mqt5
+	( cd $(buildmain)/mqt5 && meson $(srcpath) -Ddebug=true -Dqtver=qt5 -Dclients=gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)mqt7: dir_mqt7
+	( cd $(buildmain)/mqt7 && meson $(srcpath) -Ddebug=true -Dqtver=qt6x -Dclients=qt -Dfcmp=qt $$MEXTRA_CONFIG)
+
+$(mesonprefix)mO3: dir_mO3
+	( cd $(buildmain)/mO3 && meson $(srcpath) -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)mclang: dir_mclang
+	( cd $(buildmain)/mclang && CC=clang CXX=clang++ meson $(srcpath) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
+
+$(mesonprefix)mclang32: dir_mclang32
+	( cd $(buildmain)/mclang32 && CC=clang CXX=clang++ meson $(srcpath) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)mclang31: dir_mclang31
+	( cd $(buildmain)/mclang31 && CC=clang CXX=clang++ meson $(srcpath) -Dack_experimental=true -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)mweb: dir_mweb
+	( cd $(buildmain)/mweb && meson $(srcpath) -Ddebug=true -Dwerror=true -Dserver=freeciv-web -Dtools=[] -Djson-protocol=true -Dfcmp=cli $$MEXTRA_CONFIG)

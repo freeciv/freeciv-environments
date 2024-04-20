@@ -1,0 +1,25 @@
+
+# These two entries are informative only, used by logging
+branch = <S3_x>
+machine = <machine>
+
+# Number of parallel make jobs to run. Set to, e.g., to number of cores your computer has
+jobs = 1
+
+logfile = $(machine)-$(branch).log
+
+# Subdirectory where the builds of all the configurations go
+buildmain = builds
+
+# Path to an existing (not set up by these Makefiles) source directory, relative
+# to "./builds/<configuration>/"
+srcpath = ../../src
+
+# Build configuration that you can and want to build. Remove ones that you don't want
+builds = gtk3 sdl2 gtk3.22 gtk4 gtk4x qt5 qt6 qt7 stub auth ndebug nonls c23 shared clang web
+mesonbuilds = mall mqt5 mO3 mqt7 mclang mweb
+
+# Paths from the build root directory (directory of this Makefile) to makefile fragments
+# within freeciv-environments.
+include ../freeciv-environments/buildtest/Makefile.logic
+include ../freeciv-environments/buildtest/Makefile.configs
