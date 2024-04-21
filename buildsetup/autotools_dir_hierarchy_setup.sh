@@ -4,7 +4,7 @@
 # - Does not create individual build directories, as we don't
 #   know which configurations user wants
 
-export STABLE_BRANCHES="S3_2 S3_1 S3_0"
+export STABLE_BRANCHES="S3_2 S3_1"
 export REPO_URL="https://github.com/freeciv/freeciv"
 
 prepare_branch_dir()

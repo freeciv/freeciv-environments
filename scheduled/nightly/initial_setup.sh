@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export STABLE_BRANCHES="S3_2 S3_1 S3_0"
+export STABLE_BRANCHES="S3_2 S3_1"
 export REPO_URL="https://github.com/freeciv/freeciv"
 
 MAINDIR="$(cd $(dirname "$0") || exit 1 ; pwd)"
