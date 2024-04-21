@@ -94,4 +94,3 @@ make_build_dir S3_2 dev "--enable-debug --enable-client=gtk3.22,gtk4,qt,sdl2,stu
 
 make_build_dir S3_1 dev "--enable-debug --enable-client=gtk3.22,gtk4,gtk3,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres,odbc --enable-ai-static=classic,tex,stub"
 
-make_build_dir S3_0 dev "--enable-debug --enable-client=gtk3.22,gtk2,gtk3,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres --enable-ai-static=classic,tex,stub"
