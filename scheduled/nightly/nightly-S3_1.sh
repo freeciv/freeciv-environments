@@ -15,6 +15,8 @@ cd "${MAINDIR}"
 
 OLDCOMMIT="$(cat ${BRANCH}.commit)"
 
+rm -Rf "nbuild/${BRANCH}"
+
 if ! cd "${MAINDIR}/${BRANCH}" ; then
   echo "Failed to enter \"${MAINDIR}/${BRANCH}\"!" >&2
   exit 1
