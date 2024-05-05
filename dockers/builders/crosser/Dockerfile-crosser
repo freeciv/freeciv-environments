@@ -21,11 +21,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 
 RUN mkdir /usr/crosser && mkdir /build
 
-COPY input/win64stack-full-2.8.7z /usr/crosser
+ARG CROSSER_PACKET
+
+COPY input/${CROSSER_PACKET} /usr/crosser
 
 RUN cd /usr/crosser && \
-    7z x win64stack-full-2.8.7z && \
-    rm win64stack-full-2.8.7z
+    7z x ${CROSSER_PACKET} && \
+    rm ${CROSSER_PACKET}
 
 COPY input/entry.sh input/freeciv_build.sh input/crosser-ver.sh /build/
 

@@ -38,4 +38,6 @@ else
   FREECIV_UID="$1"
 fi
 
-docker build --build-arg FREECIV_UID="$FREECIV_UID" -t "fc-crosser-builder-${CROSSER_VER}" . -f Dockerfile-crosser
+docker build --build-arg FREECIV_UID="${FREECIV_UID}" \
+             --build-arg CROSSER_PACKET="${CROSSER_PACKET}" \
+             -t "fc-crosser-builder-${CROSSER_VER}" . -f Dockerfile-crosser
