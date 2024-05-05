@@ -1,7 +1,7 @@
 
 # Either latest Debian release, or latest Ubuntu LTS release,
 # which ever is newer.
-FROM debian:bookworm
+FROM ubuntu:noble
 
 MAINTAINER The Freeciv Project
 
@@ -31,7 +31,10 @@ COPY input/entry.sh input/freeciv_build.sh input/crosser-ver.sh /build/
 
 ARG FREECIV_UID
 
-RUN adduser --gecos "" --uid ${FREECIV_UID} --disabled-password freeciv
+# uid 1000 is already user "ubuntu"
+RUN if test "${FREECIV_UID}" != "1000" ; then \
+    adduser --gecos "" --uid ${FREECIV_UID} --disabled-password freeciv && \
+    echo "freeciv" > /build/username.txt ; else echo "ubuntu" > /build/username.txt ; fi
 
 WORKDIR /build
 

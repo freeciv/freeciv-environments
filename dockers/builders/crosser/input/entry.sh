@@ -3,5 +3,5 @@
 if test "$FCSHELL" = "y" ; then
   /bin/bash
 else
-  su - freeciv /build/freeciv_build.sh
+  su - $(cat /build/username.txt) /build/freeciv_build.sh
 fi
