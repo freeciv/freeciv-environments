@@ -84,6 +84,9 @@ $(mesonprefix)mqt5: dir_mqt5
 $(mesonprefix)mqt7: dir_mqt7
 	( cd $(buildmain)/mqt7 && meson $(srcpath) -Ddebug=true -Dqtver=qt6x -Dclients=qt -Dfcmp=qt $$MEXTRA_CONFIG)
 
+$(mesonprefix)sdl3: dir_sdl3
+	( cd $(buildmain)/sdl3 && meson $(srcpath) -Ddebug=true -Dclients=sdl3 -Daudio=sdl3 $$MEXTRA_CONFIG)
+
 $(mesonprefix)mO3: dir_mO3
 	( cd $(buildmain)/mO3 && meson $(srcpath) -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
