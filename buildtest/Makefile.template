@@ -17,7 +17,7 @@ srcpath = ../../src
 
 # Build configuration that you can and want to build. Remove ones that you don't want
 builds = gtk3 sdl2 gtk3.22 gtk4 gtk4x qt5 qt6 qt7 stub auth ndebug nonls c23 shared clang web
-mesonbuilds = mall mqt5 mO3 mqt7 mclang mweb
+mesonbuilds = mall mqt5 mO3 mqt7 mclang mweb sdl3
 
 # Paths from the build root directory (directory of this Makefile) to makefile fragments
 # within freeciv-environments.
