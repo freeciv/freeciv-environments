@@ -47,7 +47,7 @@ do
       while [ $GAMES_PLAYED -lt $GAMES_TO_PLAY ]
       do
         stdout_log "Running $RC"
-        nice $SRV_CMD -d 1 -l $LOGFILE -r $RC -p $PORT -e -w > /dev/null
+        nice $SRV_CMD -d warn -l $LOGFILE -r $RC -p $PORT -e -w > /dev/null
         GAMES_PLAYED=$GAMES_PLAYED+1
         TOTAL_GAMES_PLAYED=$TOTAL_GAMES_PLAYED+1
         stdout_log "Game $GAMES_PLAYED/$GAMES_TO_PLAY with $RC finished."
