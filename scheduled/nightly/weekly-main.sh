@@ -30,8 +30,6 @@ SCOMMIT="$(git rev-parse --short HEAD)"
 
 ./autogen.sh --no-configure-run
 
-./scripts/refresh_changelog.sh
-
 mkdir -p docbuild
 cd docbuild
 ../configure && make doc
