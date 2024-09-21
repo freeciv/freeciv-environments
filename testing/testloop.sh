@@ -2,7 +2,7 @@
 
 stdout_log()
 {
-  echo $(date +"%H:%M:%S") : $1
+  echo $(date +"%d.%m %H:%M:%S") : $1
 }
 
 if test "$1" = "-h" || test "$1" = "--help"
