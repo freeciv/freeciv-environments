@@ -1,7 +1,8 @@
 
  You need to use the very crosser version that freeciv
- sources expect. This container is for freeciv revisions
- that expect crosser-2.9.
+ sources expect. This version of the container can
+ be used only for building those freeciv revisions that
+ expect crosser version mentioned in input/crosser-ver.sh.
 
 -------------------------------------------------------------
 
