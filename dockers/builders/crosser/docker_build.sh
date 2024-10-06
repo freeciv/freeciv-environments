@@ -24,7 +24,14 @@ if ! test -f "input/${CROSSER_PACKET}" ; then
   (
     cd input
 
-    if ! wget "https://sourceforge.net/projects/crosser/files/crosser-${CROSSER_VER}/${CROSSER_PACKET}"
+    # Prefer wget2
+    if command -v wget2 > /dev/null ; then
+      WGET=wget2
+    else
+      WGET=wget
+    fi
+
+    if ! $WGET "https://sourceforge.net/projects/crosser/files/crosser-${CROSSER_VER}/${CROSSER_PACKET}"
     then
       echo "Failed to download ${CROSSER_PACKET}" 1>&2
       exit 1
