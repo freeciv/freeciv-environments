@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BRANCH=S3_2
-KEEP_DAYS=5
+KEEP_DAYS=4
 MAINDIR="$(cd $(dirname $0) ; pwd)"
 
 if ! test -x "$1/docker_run.sh" ; then
