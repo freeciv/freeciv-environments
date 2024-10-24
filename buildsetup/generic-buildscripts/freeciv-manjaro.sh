@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Linux Manjaro version 1.08"
+  echo "Freeciv build script for Linux Manjaro version 1.09"
   exit
 fi
 
@@ -98,11 +98,11 @@ if test -d "$MAINDIR" ; then
   echo "y)es or no?"
   echo -n "> "
   read -n 1 ANSWER
+  echo
   if test "x$ANSWER" != "xy" ; then
     echo "Didn't get definite yes for using existing directory. Aborting"
     exit 1
   fi
-  echo
 fi
 
 if ! mkdir -p "$MAINDIR" ; then

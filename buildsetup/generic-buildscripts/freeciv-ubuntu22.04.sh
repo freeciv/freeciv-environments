@@ -15,7 +15,7 @@
 #
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Ubuntu-22.04 (jammy) version 1.03"
+  echo "Freeciv build script for Ubuntu-22.04 (jammy) version 1.04"
   exit
 fi
 
@@ -126,11 +126,11 @@ if test -d "$MAINDIR" ; then
   echo "y)es or no?"
   echo -n "> "
   read -n 1 ANSWER
+  echo
   if test "$ANSWER" != "y" ; then
     echo "Didn't get definite yes for using existing directory. Aborting"
     exit 1
   fi
-  echo
 fi
 
 if ! mkdir -p "$MAINDIR" ; then
