@@ -15,7 +15,7 @@
 #
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.00"
+  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.01"
   exit
 fi
 
@@ -118,7 +118,7 @@ if test "$req_install" != "n"; then
     libgtk2.0-dev qtbase5-dev libgtk-4-dev \
     libsdl2-mixer-dev libsdl2-image-dev libsdl2-gfx-dev libsdl2-ttf-dev \
     libsdl-mixer1.2-dev libsdl-image1.2-dev libsdl-gfx1.2-dev libsdl-ttf2.0-dev \
-    libicu-dev qt6-base-dev
+    libicu-dev qt6-base-dev libsqlite3-dev
 fi
 
 if test -d "$MAINDIR" ; then
