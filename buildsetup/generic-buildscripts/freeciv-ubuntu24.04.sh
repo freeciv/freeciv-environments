@@ -7,15 +7,17 @@
 # Run the script, e.g.
 # "> ./freeciv-ubuntu24.04.sh --help"
 # or
-# "> ./freeciv-ubuntu24.04.sh 3.1.3 gtk3.22"
+# "> ./freeciv-ubuntu24.04.sh 3.1.3 gtk4"
 # or
 # "> ./freeciv-ubuntu24.04.sh 3.1.3 qt"
 # or
 # "> ./freeciv-ubuntu24.04.sh 3.1.3 sdl2"
+# or
+# "> ./freeciv-ubuntu24.04.sh 3.1.3 gtk3.22"
 #
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.02"
+  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.03"
   exit
 fi
 
@@ -149,9 +151,9 @@ if ! test -f freeciv-$REL.tar.bz2 && ! test -f freeciv-$REL.tar.xz ; then
   echo "Downloading freeciv-$REL"
   if test "$4" = "" ; then
     if test "$FREECIV_MAJMIN" = "2.6" ; then
-      URL="http://sourceforge.net/projects/freeciv/files/Freeciv $FREECIV_MAJMIN/$REL/freeciv-$REL.tar.bz2"
+      URL="https://sourceforge.net/projects/freeciv/files/Freeciv $FREECIV_MAJMIN/$REL/freeciv-$REL.tar.bz2"
     else
-      URL="http://sourceforge.net/projects/freeciv/files/Freeciv $FREECIV_MAJMIN/$REL/freeciv-$REL.tar.xz"
+      URL="https://sourceforge.net/projects/freeciv/files/Freeciv $FREECIV_MAJMIN/$REL/freeciv-$REL.tar.xz"
     fi
   else
     URL="$4"
