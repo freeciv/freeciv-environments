@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Linux Manjaro version 1.09"
+  echo "Freeciv build script for Linux Manjaro version 1.10"
   exit
 fi
 
@@ -121,9 +121,9 @@ if ! test -f freeciv-$REL.tar.bz2 && ! test -f freeciv-$REL.tar.xz ; then
   echo "Downloading freeciv-$REL"
   if test "$4" = "" ; then
     if test "$FREECIV_MAJMIN" = "2.6" ; then
-      URL="http://sourceforge.net/projects/freeciv/files/Freeciv $FREECIV_MAJMIN/$REL/freeciv-$REL.tar.bz2"
+      URL="https://sourceforge.net/projects/freeciv/files/Freeciv $FREECIV_MAJMIN/$REL/freeciv-$REL.tar.bz2"
     else
-      URL="http://sourceforge.net/projects/freeciv/files/Freeciv $FREECIV_MAJMIN/$REL/freeciv-$REL.tar.xz"
+      URL="https://sourceforge.net/projects/freeciv/files/Freeciv $FREECIV_MAJMIN/$REL/freeciv-$REL.tar.xz"
     fi
   else
     URL="$4"
