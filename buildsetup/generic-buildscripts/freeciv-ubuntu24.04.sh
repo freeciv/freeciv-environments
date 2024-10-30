@@ -17,7 +17,7 @@
 #
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.03"
+  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.04"
   exit
 fi
 
@@ -120,7 +120,7 @@ if test "$req_install" != "n"; then
     libgtk2.0-dev qtbase5-dev libgtk-4-dev \
     libsdl2-mixer-dev libsdl2-image-dev libsdl2-gfx-dev libsdl2-ttf-dev \
     libsdl-mixer1.2-dev libsdl-image1.2-dev libsdl-gfx1.2-dev libsdl-ttf2.0-dev \
-    libicu-dev qt6-base-dev libsqlite3-dev
+    libicu-dev qt6-base-dev libsqlite3-dev meson
 fi
 
 if test -d "$MAINDIR" ; then
@@ -224,22 +224,44 @@ else
   FCMP="gtk3"
 fi
 
-echo "configure"
-if ! ../../freeciv-$REL/configure --prefix=$FREECIV_MAINDIR/install-$REL/$GUI --enable-client=$GUI --enable-fcmp=$FCMP $EXTRA_CONFIG ; then
-  echo "Configure failed" >&2
-  exit 1
-fi
+if test "$FREECIV_MAJMIN" = "2.6" ||
+   test "$FREECIV_MAJMIN" = "3.0" ||
+   test "$FREECIV_MAJMIN" = "3.1" ; then
+  echo "configure"
+  if ! ../../freeciv-$REL/configure --prefix=$FREECIV_MAINDIR/install-$REL/$GUI --enable-client=$GUI --enable-fcmp=$FCMP $EXTRA_CONFIG ; then
+    echo "Configure failed" >&2
+    exit 1
+  fi
 
-echo "make"
-if ! make ; then
-  echo "Make failed" >&2
-  exit 1
-fi
+  echo "make"
+  if ! make ; then
+    echo "Make failed" >&2
+    exit 1
+  fi
 
-echo "make install"
-if ! make install ; then
-  echo "'Make install' failed" >&2
-  exit 1
+  echo "make install"
+  if ! make install ; then
+    echo "'Make install' failed" >&2
+    exit 1
+  fi
+else
+  echo "meson"
+  if ! meson setup ../../freeciv-$REL -Ddefault_library=static -Dprefix=$FREECIV_MAINDIR/install-$REL/$GUI -Dclients=$GUI -Dfcmp=$FCMP ; then
+    echo "Meson failed" >&2
+    exit 1
+  fi
+
+  echo "ninja"
+  if ! ninja ; then
+    echo "Ninja failed" >&2
+    exit 1
+  fi
+
+  echo "ninja install"
+  if ! ninja install ; then
+    echo "Ninja install failed" >&2
+    exit 1
+  fi
 fi
 
 echo
