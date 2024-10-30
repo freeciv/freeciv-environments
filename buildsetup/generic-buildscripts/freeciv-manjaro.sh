@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Linux Manjaro version 1.10"
+  echo "Freeciv build script for Linux Manjaro version 1.11"
   exit
 fi
 
@@ -90,7 +90,7 @@ done
 if test "$req_install" != "n" ; then
 echo "Installing requirements"
 sudo pacman -Su --needed \
-  gcc make sdl2_mixer pkg-config
+  gcc make sdl2_mixer pkg-config meson
 fi
 
 if test -d "$MAINDIR" ; then
@@ -139,7 +139,8 @@ fi
 if ! test -d "freeciv-$REL" ; then
   echo "Unpacking freeciv-$REL"
   if test -f freeciv-$REL.tar.xz ; then
-    if ! tar xJf freeciv-$REL.tar.xz ; then
+    if ! mkdir -p freeciv-$REL ||
+       ! tar xJf freeciv-$REL.tar.xz -C freeciv-$REL --strip-components 1 ; then
       echo "Failed to unpack freeciv-$REL.tar.xz" >&2
       exit 1
     fi
@@ -189,22 +190,44 @@ else
   FCMP="gtk3"
 fi
 
-echo "configure"
-if ! ../../freeciv-$REL/configure --prefix=$FREECIV_MAINDIR/install-$REL/$GUI --enable-client=$GUI --enable-fcmp=$FCMP $EXTRA_CONFIG ; then
-  echo "Configure failed" >&2
-  exit 1
-fi
+if test "$FREECIV_MAJMIN" = "2.6" ||
+   test "$FREECIV_MAJMIN" = "3.0" ||
+   test "$FREECIV_MAJMIN" = "3.1" ; then
+  echo "configure"
+  if ! ../../freeciv-$REL/configure --prefix=$FREECIV_MAINDIR/install-$REL/$GUI --enable-client=$GUI --enable-fcmp=$FCMP $EXTRA_CONFIG ; then
+    echo "Configure failed" >&2
+    exit 1
+  fi
 
-echo "make"
-if ! make ; then
-  echo "Make failed" >&2
-  exit 1
-fi
+  echo "make"
+  if ! make ; then
+    echo "Make failed" >&2
+    exit 1
+  fi
 
-echo "make install"
-if ! make install ; then
-  echo "'Make install' failed" >&2
-  exit 1
+  echo "make install"
+  if ! make install ; then
+    echo "'Make install' failed" >&2
+    exit 1
+  fi
+else
+  echo "meson"
+  if ! meson setup ../../freeciv-$REL -Ddefault_library=static -Dprefix=$FREECIV_MAINDIR/install-$REL/$GUI -Dclients=$GUI -Dfcmp=$FCMP ; then
+    echo "Meson failed" >&2
+    exit 1
+  fi
+
+  echo "ninja"
+  if ! ninja ; then
+    echo "Ninja failed" >&2
+    exit 1
+  fi
+
+  echo "ninja install"
+  if ! ninja install ; then
+    echo "Ninja install failed" >&2
+    exit 1
+  fi
 fi
 
 echo
