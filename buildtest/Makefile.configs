@@ -9,7 +9,7 @@ clientconfig_% : dir_%
 	( cd $(buildmain)/$* && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=$* --disable-server )
 
 $(configprefix)gtk3 : dir_gtk3
-	( cd $(buildmain)/gtk3 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=gtk3 --enable-fcmp=gtk3)
+	( cd $(buildmain)/gtk3 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-client=gtk3 --enable-fcmp=gtk3)
 
 $(configprefix)gtk3.22 : dir_gtk3.22
 	( cd $(buildmain)/gtk3.22 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=gtk3.22 --enable-fcmp=gtk3)
@@ -80,7 +80,7 @@ $(configprefix)nonls_32 : dir_nonls_32
 	( cd $(buildmain)/nonls_32 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --disable-nls)
 
 $(configprefix)web : dir_web
-	( cd $(buildmain)/web && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-fcweb --enable-json --enable-client)
+	( cd $(buildmain)/web && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-fcweb --enable-json --enable-client)
 
 $(configprefix)shared : dir_shared
 	( cd $(buildmain)/shared && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-shared --disable-static --enable-client=sdl2,qt,gtk3.22)
