@@ -15,9 +15,18 @@ buildmain = builds
 # to "./builds/<configuration>/"
 srcpath = ../../src
 
-# Build configuration that you can and want to build. Remove ones that you don't want
+# Build configurations that you can and want to build. Remove ones that you don't want
+# Some configs differ between freeciv versions. Naming here reflects main branch compatibility,
+# or the latest branch where the configuration makes sense at all (e.g. clients removed
+# from later branches).
+# All the autotools configs that make sense both for freeciv-3.2 and freeciv-3.3 have
+# separate config with '_32' suffix to be used with freeciv-3.2 and earlier.
 builds = gtk3 sdl2 gtk3.22 gtk4 gtk4x qt5 qt6 qt7 stub auth ndebug nonls c23 shared clang web
 mesonbuilds = mall mqt5 mO3 mqt7 mclang mweb sdl3
+
+# For freeciv-3.2 and earlier:
+#builds = gtk3 sdl2_32 gtk3.22_32 gtk4_32 qt5_32 qt6_32 stub_32 auth_32 ndebug_32 nonls_32 c23_32 shared_32 clang_32 web
+#mesonbuilds = mall32 mqt5 mO3 mclang32 mweb sdl3
 
 # Paths from the build root directory (directory of this Makefile) to makefile fragments
 # within freeciv-environments.
