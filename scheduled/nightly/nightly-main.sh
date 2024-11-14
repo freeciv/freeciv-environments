@@ -84,7 +84,7 @@ fi
 
 mkdir -p tarbuild
 cd tarbuild
-../configure && make dist
+../configure --enable-ack-legacy && make dist
 ODISTNAME=$(ls -1 *.tar.xz)
 NDISTNAME=$(echo ${ODISTNAME} | sed "s/.tar.xz/-${SCOMMIT}.tar.xz/")
 mv ${ODISTNAME} ${NDISTNAME}
