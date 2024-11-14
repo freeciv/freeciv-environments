@@ -32,7 +32,7 @@ SCOMMIT="$(git rev-parse --short HEAD)"
 
 mkdir -p docbuild
 cd docbuild
-../configure && make doc
+../configure --enable-ack-legacy && make doc
 
 rm -Rf "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen/html" "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen.7z"
 
