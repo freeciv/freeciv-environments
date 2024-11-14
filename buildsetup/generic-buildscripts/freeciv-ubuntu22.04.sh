@@ -15,7 +15,7 @@
 #
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Ubuntu-22.04 (jammy) version 1.05"
+  echo "Freeciv build script for Ubuntu-22.04 (jammy) version 1.06"
   exit
 fi
 
@@ -205,6 +205,10 @@ fi
 if ! cd builds-$REL/$GUI ; then
   echo "Failed to go to directory builds-$REL/$GUI" >&2
   exit 1
+fi
+
+if test "${FREECIV_MAJMIN}" = "3.3" ; then
+  EXTRA_CONFIG="--enable-ack-legacy"
 fi
 
 if test "$GUI" = "sdl" ; then
