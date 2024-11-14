@@ -17,7 +17,7 @@
 #
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.05"
+  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.06"
   exit
 fi
 
@@ -38,8 +38,6 @@ if test "$3" = "" ; then
 else
   MAINDIR="$3"
 fi
-
-FREECIV_MAJMIN="$(echo "$REL" | sed 's/\./ /g' | (read MAJOR MINOR PATCH ; echo -n "$MAJOR.$MINOR"))"
 
 if test $(echo "${REL}" | sed -e 's/\./ /g' -e 's/-/ /g' | (read MAJOR MINOR PATCH EMERG ; echo -n "${PATCH}")) -ge 90
 then
