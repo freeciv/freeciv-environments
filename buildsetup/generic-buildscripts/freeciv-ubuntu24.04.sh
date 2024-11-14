@@ -17,14 +17,14 @@
 #
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.04"
+  echo "Freeciv build script for Ubuntu-24.04 (noble) version 1.05"
   exit
 fi
 
 if test "$1" = "" || test "$2" = "" ||
    test "$1" = "-h" || test "$1" = "--help" ; then
   echo "Usage: $0 <release> <gui> [main dir=freeciv-genbuild] [download URL]"
-  echo "Supported releases are those of 2.6, 3.0, 3.1, and 3.2 major versions"
+  echo "Supported releases are those of 2.6, 3.0, 3.1, 3.2, and 3.3 major versions"
   echo "Supported guis are 'gtk2', 'gtk3.22', 'gtk3', 'gtk4', 'qt', 'sdl', 'sdl2'"
   echo "URL must point either to tar.bz2 or tar.xz package"
   exit
@@ -41,17 +41,18 @@ fi
 
 FREECIV_MAJMIN="$(echo "$REL" | sed 's/\./ /g' | (read MAJOR MINOR PATCH ; echo -n "$MAJOR.$MINOR"))"
 
-if test "$FREECIV_MAJMIN" = "3.1" ; then
-  if test $(echo "$REL" | sed 's/\./ /g' | (read MAJOR MINOR PATCH EMERG ; echo -n "$PATCH")) -ge 90
-  then
-    FREECIV_MAJMIN="3.2"
-  fi
+if test $(echo "${REL}" | sed -e 's/\./ /g' -e 's/-/ /g' | (read MAJOR MINOR PATCH EMERG ; echo -n "${PATCH}")) -ge 90
+then
+  FREECIV_MAJMIN="$(echo "${REL}" | sed 's/\./ /g' | (read MAJOR MINOR PATCH ; declare -i MINOR_INT ; MINOR_INT=${MINOR}+1 ; echo -n "${MAJOR}.${MINOR_INT}"))"
+else
+  FREECIV_MAJMIN="$(echo "${REL}" | sed 's/\./ /g' | (read MAJOR MINOR PATCH ; echo -n "${MAJOR}.${MINOR}"))"
 fi
 
 if test "$FREECIV_MAJMIN" != "2.6" &&
    test "$FREECIV_MAJMIN" != "3.0" &&
    test "$FREECIV_MAJMIN" != "3.1" &&
-   test "$FREECIV_MAJMIN" != "3.2" ; then
+   test "$FREECIV_MAJMIN" != "3.2" &&
+   test "$FREECIV_MAJMIN" != "3.3" ; then
   echo "Release '$REL' from unsupported branch. See '$0 --help' for supported options" >&2
   exit 1
 fi
