@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Linux Manjaro version 1.12"
+  echo "Freeciv build script for Linux Manjaro version 1.13"
   exit
 fi
 
@@ -89,7 +89,7 @@ done
 if test "$req_install" != "n" ; then
 echo "Installing requirements"
 sudo pacman -Su --needed \
-  gcc make sdl2_mixer pkg-config meson
+  gcc make sdl2_mixer pkg-config meson gtk4
 fi
 
 if test -d "$MAINDIR" ; then
