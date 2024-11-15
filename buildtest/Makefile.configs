@@ -5,9 +5,6 @@ leg_defconf=""
 clang_leg_conf="CC=clang CXX=clang++ CXXFLAGS=-std=c++11"
 clangconf="CC=clang CXX=clang++"
 
-clientconfig_% : dir_%
-	( cd $(buildmain)/$* && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=$* --disable-server )
-
 $(configprefix)gtk3 : dir_gtk3
 	( cd $(buildmain)/gtk3 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-client=gtk3 --enable-fcmp=gtk3)
 
@@ -32,10 +29,11 @@ $(configprefix)sdl2 : dir_sdl2
 $(configprefix)sdl2_32 : dir_sdl2_32
 	( cd $(buildmain)/sdl2_32 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-client=sdl2)
 
-$(configprefix)stub : clientconfig_stub
+$(configprefix)stub : dir_stub
+	( cd $(buildmain)/stub && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=stub --disable-server --enable-fcmp=cli )
 
 $(configprefix)stub_32 : dir_stub_32
-	( cd $(buildmain)/stub_32 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-client=stub --disable-server )
+	( cd $(buildmain)/stub_32 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-client=stub --disable-server --enable-fcmp=cli )
 
 $(configprefix)qt : dir_qt
 	( cd $(buildmain)/qt && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=qt --enable-fcmp=qt)
