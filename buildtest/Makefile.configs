@@ -136,3 +136,6 @@ $(mesonprefix)mclang31: dir_mclang31
 
 $(mesonprefix)mweb: dir_mweb
 	( cd $(buildmain)/mweb && meson $(srcpath) -Ddebug=true -Dwerror=true -Dserver=freeciv-web -Dtools=[] -Djson-protocol=true -Dfcmp=cli $$MEXTRA_CONFIG)
+
+$(mesonprefix)fcdb: dir_fcdb
+	( cd $(buildmain)/fcdb && meson $(srcpath) -Ddebug=true -Dwerror=true -Dfcdb=sqlite3,mariadb,odbc $$MEXTRA_CONFIG)

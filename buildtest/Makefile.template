@@ -22,7 +22,7 @@ srcpath = ../../src
 # All the autotools configs that make sense both for freeciv-3.2 and freeciv-3.3 have
 # separate config with '_32' suffix to be used with freeciv-3.2 and earlier.
 builds = gtk3 sdl2 gtk3.22 gtk4 gtk4x qt5 qt6 qt7 stub auth ndebug nonls c23 shared clang web
-mesonbuilds = mall mqt5 mO3 mqt7 mclang mweb sdl3
+mesonbuilds = mall mqt5 mO3 mqt7 mclang mweb sdl3 fcdb
 
 # For freeciv-3.2 and earlier:
 #builds = gtk3 sdl2_32 gtk3.22_32 gtk4_32 qt5_32 qt6_32 stub_32 auth_32 ndebug_32 nonls_32 c23_32 shared_32 clang_32 web
