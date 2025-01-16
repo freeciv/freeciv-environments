@@ -6,6 +6,7 @@ if ! test -x "$1/docker_run.sh" ; then
 fi
 
 if test "$2" != "main" &&
+   test "$2" != "S3_3" &&
    test "$2" != "S3_2" &&
    test "$2" != "S3_1" &&
    test "$2" != "S3_0" ; then
@@ -38,7 +39,7 @@ cd "$DOCKDIR"
 
 cd "$MAINDIR"
 
-if test "${BRANCH}" = "main" ; then
+if test "${BRANCH}" = "main" || test "${BRANCH}" = "S3_3" ; then
 
 ls -1 ${BRANCH}/platforms/windows/installer_cross/meson/output/Freeciv-*-setup.exe | ( while read ONAME ; do
   NNAME=$(echo "$ONAME" | sed "s,-setup.exe,-${SCOMMIT}-setup.exe,")

@@ -4,7 +4,7 @@
 # - Does not create individual build directories, as we don't
 #   know which configurations user wants
 
-export STABLE_BRANCHES="S3_2 S3_1"
+export STABLE_BRANCHES="S3_3 S3_2 S3_1"
 export REPO_URL="https://github.com/freeciv/freeciv"
 
 prepare_branch_dir()
@@ -90,7 +90,8 @@ done
 
 make_build_dir main dev "--enable-debug --enable-ack-legacy --enable-client=gtk3.22,gtk4,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres,odbc --enable-ai-static=classic,tex,stub"
 
+make_build_dir S3_3 dev "--enable-debug --enable-ack-legacy --enable-client=gtk3.22,gtk4,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres,odbc --enable-ai-static=classic,tex,stub"
+
 make_build_dir S3_2 dev "--enable-debug --enable-client=gtk3.22,gtk4,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres,odbc --enable-ai-static=classic,tex,stub"
 
 make_build_dir S3_1 dev "--enable-debug --enable-client=gtk3.22,gtk4,gtk3,qt,sdl2,stub --enable-fcmp=gtk3,gtk4,qt,cli --enable-fcdb=sqlite3,mysql,postgres,odbc --enable-ai-static=classic,tex,stub"
-
