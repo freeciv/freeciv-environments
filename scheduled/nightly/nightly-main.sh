@@ -24,8 +24,7 @@ fi
 
 rm -Rf tarbuild
 rm -Rf docbuild
-rm -Rf platforms/windows/installer_cross/meson \
-       platforms/windows/installer/cross/autotools
+rm -Rf platforms/windows/installer_cross/meson
 
 git checkout translations
 git checkout ChangeLog
