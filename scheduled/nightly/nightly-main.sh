@@ -23,7 +23,6 @@ if ! cd "${MAINDIR}/${BRANCH}" ; then
 fi
 
 rm -Rf tarbuild
-rm -Rf docbuild
 rm -Rf platforms/windows/installer_cross/meson
 
 git checkout translations

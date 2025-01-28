@@ -23,7 +23,6 @@ if ! cd "${MAINDIR}/${BRANCH}" ; then
 fi
 
 rm -Rf tarbuild
-rm -Rf docbuild
 rm -Rf windows/installer_cross/Output \
        windows/installer_cross/freeciv-win64-* \
        windows/installer_cross/build-win64-* \
