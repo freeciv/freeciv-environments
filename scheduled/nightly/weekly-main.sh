@@ -3,16 +3,15 @@
 BRANCH=main
 MAINDIR="$(cd $(dirname "$0") ; pwd)"
 
-cd "$MAINDIR"
+cd "${MAINDIR}"
 
-OLDCOMMIT="$(cat ${BRANCH}.weekly.commit)"
+OLDCOMMIT="$(cat "${BRANCH}.weekly.commit")"
 
 if ! cd "${MAINDIR}/${BRANCH}" ; then
   echo "Failed to enter \"${MAINDIR}/${BRANCH}\"!" >&2
   exit 1
 fi
 
-rm -Rf tarbuild
 rm -Rf docbuild
 
 git checkout translations
@@ -26,13 +25,17 @@ fi
 
 echo "${COMMIT}" > "${MAINDIR}/${BRANCH}.weekly.commit"
 
-SCOMMIT="$(git rev-parse --short HEAD)"
+if ! mkdir -p docbuild ; then
+  echo "Failed to create docbuild directory!" >&2
+  exit 1
+fi
 
-./autogen.sh --no-configure-run
-
-mkdir -p docbuild
 cd docbuild
-../configure --enable-ack-legacy && make doc
+
+if ! ../scripts/generate_doc.sh .. ; then
+  echo "Failed to generate documentation!" >&2
+  exit 1
+fi
 
 rm -Rf "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen/html" "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen.7z"
 
