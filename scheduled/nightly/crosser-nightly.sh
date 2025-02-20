@@ -8,8 +8,7 @@ fi
 if test "$2" != "main" &&
    test "$2" != "S3_3" &&
    test "$2" != "S3_2" &&
-   test "$2" != "S3_1" &&
-   test "$2" != "S3_0" ; then
+   test "$2" != "S3_1" ; then
   echo "Unknown branch \"$2\"" >&2
   exit 1
 fi
@@ -72,7 +71,7 @@ ls -1 ${BRANCH}/windows/installer_cross/meson/output/freeciv-*.7z | ( while read
   done )
 
 else
-  # Old S3_0 & S3_1 directory hierarchy
+  # Old S3_1 directory hierarchy
 ls -1 ${BRANCH}/windows/installer_cross/Output/Freeciv-*-setup.exe | ( while read ONAME ; do
   NNAME=$(echo "$ONAME" | sed "s,-setup.exe,-${SCOMMIT}-setup.exe,")
   echo "$NNAME" | sed "s,^${BRANCH}/windows/installer_cross/Output/,${BNBR}: crosser/," >> $BRANCH.files
