@@ -1,7 +1,7 @@
 #!/bin/sh -i
 
-if test "$FCSHELL" = "y" ; then
+if test "${FCSHELL}" = "y" ; then
   /bin/bash
 else
-  su - $(cat /build/username.txt) /build/freeciv_build.sh
+  su - $(cat /env/username.txt) /env/freeciv_build.sh
 fi

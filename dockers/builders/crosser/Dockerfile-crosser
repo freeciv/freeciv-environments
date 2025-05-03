@@ -19,7 +19,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
           libpcre2-16-0 \
     && DEBIAN_FRONTEND=noninteractive apt-get clean --yes
 
-RUN mkdir /usr/crosser && mkdir /build
+RUN mkdir /usr/crosser && mkdir /env
 
 ARG CROSSER_PACKET
 
@@ -29,15 +29,15 @@ RUN cd /usr/crosser && \
     7z x ${CROSSER_PACKET} && \
     rm ${CROSSER_PACKET}
 
-COPY input/entry.sh input/freeciv_build.sh input/crosser-ver.sh /build/
+COPY input/entry.sh input/freeciv_build.sh input/crosser-ver.sh /env/
 
 ARG FREECIV_UID
 
 # uid 1000 is already user "ubuntu"
 RUN if test "${FREECIV_UID}" != "1000" ; then \
     adduser --gecos "" --uid ${FREECIV_UID} --disabled-password freeciv && \
-    echo "freeciv" > /build/username.txt ; else echo "ubuntu" > /build/username.txt ; fi
+    echo "freeciv" > /env/username.txt ; else echo "ubuntu" > /env/username.txt ; fi
 
-WORKDIR /build
+WORKDIR /env
 
-ENTRYPOINT ["/build/entry.sh", "-c", "--"]
+ENTRYPOINT ["/env/entry.sh", "-c", "--"]

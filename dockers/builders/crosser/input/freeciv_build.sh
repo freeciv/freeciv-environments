@@ -1,6 +1,6 @@
 #!/bin/sh -i
 
-. /build/crosser-ver.sh
+. /env/crosser-ver.sh
 
 if test -d /freeciv/platforms/windows/installer_cross ; then
   cd /freeciv/platforms/windows/installer_cross/
