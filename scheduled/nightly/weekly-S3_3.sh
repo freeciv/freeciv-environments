@@ -37,7 +37,8 @@ if ! ../scripts/generate_doc.sh .. ; then
   exit 1
 fi
 
-rm -Rf "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen/html" "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen.7z"
+rm -Rf "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen/html" \
+       "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen.7z"
 
 mv doc/doxygen/html "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen/"
 

@@ -34,7 +34,8 @@ mkdir -p docbuild
 cd docbuild
 ../configure && make doc
 
-rm -Rf "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen/html" "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen.7z"
+rm -Rf "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen/html" \
+       "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen.7z"
 
 mv doc/doxygen/html "${MAINDIR}/nightly/weekly/${BRANCH}/doxygen/"
 
