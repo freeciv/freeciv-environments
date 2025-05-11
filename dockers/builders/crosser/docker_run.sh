@@ -8,6 +8,10 @@ else
   SRCDIR="$(cd $1 || exit 1 ; pwd)"
 fi
 
+if test "$2" != "" ; then
+  BUILDDIR="$(cd $2 || exit 1 ; pwd)"
+fi
+
 if ! test -x "${SRCDIR}/fc_version" ; then
   echo "${SRCDIR}/ is not a freeciv source tree" >&2
 
@@ -70,4 +74,11 @@ if ! test -x "${SRCDIR}/fc_version" ; then
   fi
 fi
 
-docker run --mount type=bind,source="${SRCDIR}",target=/freeciv -t "fc-crosser-builder-${CROSSER_VER}"
+if test "${BUILDDIR}" = "" ; then
+  docker run --mount type=bind,source="${SRCDIR}",target=/freeciv \
+             -t "fc-crosser-builder-${CROSSER_VER}"
+else
+  docker run --mount type=bind,source="${SRCDIR}",target=/freeciv \
+             --mount type=bind,source="${BUILDDIR}",target=/build \
+             -t "fc-crosser-builder-${CROSSER_VER}"
+fi

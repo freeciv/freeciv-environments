@@ -28,7 +28,12 @@ does the build (e.g. to test some build step manually)
 -------------------------------------------------------------
 
 The build happens with:
-> ./docker_run.sh [srcdir]
+> ./docker_run.sh [srcdir] [builddir]
 
 Default for [srdir] is 'src/main' under current directory.
-Note that build happens inside the source tree, and is writing there.
+[builddir] is supported only by freeciv-3.4 and later.
+Earlier versions will result in different errors if you try
+to pass this parameter to them. The build results
+will be placed on the [builddir].
+If no [builddir] has been given, build happens inside
+the source tree, and the results are written there.
