@@ -27,6 +27,16 @@ BRANCH="$2"
 BNBR="$3"
 SCOMMIT="$4"
 
+if test "$5" != "" ; then
+  if ! test -d "$5" ; then
+    echo "No such builddir: \"$5\"" >&2
+    exit 1
+  fi
+  BUILDDIR="$(cd "$5" ; pwd)"
+else
+  BUILDDIR=""
+fi
+
 if ! test -f "${MAINDIR}/${BRANCH}/.git" ; then
   echo "No git clone at \"${MAINDIR}/${BRANCH}\"" >&2
   exit 1
@@ -34,11 +44,27 @@ fi
 
 cd "$DOCKDIR"
 
-./docker_run.sh "${MAINDIR}/${BRANCH}"
+./docker_run.sh "${MAINDIR}/${BRANCH}" "${BUILDDIR}"
 
 cd "$MAINDIR"
 
-if test "${BRANCH}" = "main" || test "${BRANCH}" = "S3_3" ; then
+if test "${BUILDDIR}" != "" ; then
+
+ls -1 ${BUILDDIR}/meson/output/Freeciv-*-setup.exe | ( while read ONAME ; do
+  NNAME=$(echo "$ONAME" | sed "s,-setup.exe,-${SCOMMIT}-setup.exe,")
+  echo "${NNAME}" | sed "s,^${BUILDDIR}/meson/output/,${BNBR}: crosser/," >> $BRANCH.files
+  mv "${ONAME}" "${NNAME}"
+  mv "${NNAME}" "nightly/${BRANCH}/crosser/"
+  done )
+
+ls -1 ${BUILDDIR}/meson/output/freeciv-*.7z | ( while read ONAME ; do
+  NNAME=$(echo "$ONAME" | sed "s,.7z,-${SCOMMIT}.7z,")
+  echo "$NNAME" | sed "s,^${BUILDDIR}/meson/output/,${BNBR}: crosser/portable/," >> $BRANCH.files
+  mv "$ONAME" "$NNAME"
+  mv "$NNAME" "nightly/${BRANCH}/crosser/portable/"
+  done )
+
+elif test "${BRANCH}" = "main" || test "${BRANCH}" = "S3_3" ; then
 
 ls -1 ${BRANCH}/platforms/windows/installer_cross/meson/output/Freeciv-*-setup.exe | ( while read ONAME ; do
   NNAME=$(echo "$ONAME" | sed "s,-setup.exe,-${SCOMMIT}-setup.exe,")
