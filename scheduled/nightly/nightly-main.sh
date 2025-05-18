@@ -48,6 +48,11 @@ if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/appimage" ; then
   exit 1
 fi
 
+if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/crosser" ; then
+  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/crosser\"" >&2
+  exit 1
+fi
+
 echo "${COMMIT}" > "${MAINDIR}/${BRANCH}.commit"
 
 SCOMMIT="$(git rev-parse --short HEAD)"
@@ -127,7 +132,8 @@ ls -1 "nbuild/${BRANCH}/appimage/"*.AppImage |
   sed "s,^nbuild/${BRANCH}/,${BNBR}: ," >> ${BRANCH}.files
 mv "nbuild/${BRANCH}/appimage/"*.AppImage "nightly/${BRANCH}/appimage/"
 
-./crosser-nightly.sh "${DOCKDIR}" "${BRANCH}" "${BNBR}" "${SCOMMIT}"
+./crosser-nightly.sh "${DOCKDIR}" "${BRANCH}" "${BNBR}" "${SCOMMIT}" \
+                     "nbuild/${BRANCH}/crosser"
 
 if test -x ./upload.sh ; then
   ./upload.sh
