@@ -39,17 +39,17 @@ if test "${COMMIT}" = "${OLDCOMMIT}" ; then
 fi
 
 if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/flatpak" ; then
-  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/flatpak" >&2
+  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/flatpak\"!" >&2
   exit 1
 fi
 
 if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/appimage" ; then
-  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/appimage" >&2
+  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/appimage\"!" >&2
   exit 1
 fi
 
 if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/crosser" ; then
-  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/crosser\"" >&2
+  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/crosser\"!" >&2
   exit 1
 fi
 

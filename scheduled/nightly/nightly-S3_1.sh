@@ -42,7 +42,7 @@ if test "${COMMIT}" = "${OLDCOMMIT}" ; then
 fi
 
 if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/appimage" ; then
-  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/appimage" >&2
+  echo "Failed to create \"${MAINDIR}/nbuild/${BRANCH}/appimage\"!" >&2
   exit 1
 fi
 
