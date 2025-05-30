@@ -4,6 +4,7 @@ defconf="--enable-ack-legacy"
 leg_defconf=""
 clang_leg_conf="CC=clang CXX=clang++ CXXFLAGS=-std=c++11"
 clangconf="CC=clang CXX=clang++"
+mesonconf="-Doptimization=2"
 
 $(configprefix)gtk3 : dir_gtk3
 	( cd $(buildmain)/gtk3 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-client=gtk3 --enable-fcmp=gtk3)
@@ -99,43 +100,43 @@ $(configprefix)clang31: dir_clang31
 	( cd $(buildmain)/clang31 && $(srcpath)/autogen.sh $(clangconf) $(leg_defconf) --enable-debug --enable-client=gtk3,sdl2,qt,gtk3.22 --enable-fcmp=gtk3,qt,cli)
 
 $(mesonprefix)mall31: dir_mall31
-	( cd $(buildmain)/mall31 && meson $(srcpath) -Dack_experimental=true -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22 -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mall31 && meson $(srcpath) $(mesonconf) -Dack_experimental=true -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22 -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mqt531: dir_mqt531
-	( cd $(buildmain)/mqt531 && meson $(srcpath) -Dack_experimental=true -Dqtver=qt5 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mqt531 && meson $(srcpath) $(mesonconf) -Dack_experimental=true -Dqtver=qt5 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mO331: dir_mO331
 	( cd $(buildmain)/mO331 && meson $(srcpath) -Dack_experimental=true -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mall32: dir_mall32
-	( cd $(buildmain)/mall32 && meson $(srcpath) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mall32 && meson $(srcpath) $(mesonconf) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mall: dir_mall
-	( cd $(buildmain)/mall && meson $(srcpath) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mall && meson $(srcpath) $(mesonconf) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
 
 $(mesonprefix)mqt5: dir_mqt5
-	( cd $(buildmain)/mqt5 && meson $(srcpath) -Ddebug=true -Dqtver=qt5 -Dclients=gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mqt5 && meson $(srcpath) $(mesonconf) -Ddebug=true -Dqtver=qt5 -Dclients=gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mqt7: dir_mqt7
-	( cd $(buildmain)/mqt7 && meson $(srcpath) -Ddebug=true -Dqtver=qt6x -Dclients=qt -Dfcmp=qt $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mqt7 && meson $(srcpath) $(mesonconf) -Ddebug=true -Dqtver=qt6x -Dclients=qt -Dfcmp=qt $$MEXTRA_CONFIG)
 
 $(mesonprefix)sdl3: dir_sdl3
-	( cd $(buildmain)/sdl3 && meson $(srcpath) -Ddebug=true -Dclients=sdl3 -Daudio=sdl3 $$MEXTRA_CONFIG)
+	( cd $(buildmain)/sdl3 && meson $(srcpath) $(mesonconf) -Ddebug=true -Dclients=sdl3 -Daudio=sdl3 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mO3: dir_mO3
 	( cd $(buildmain)/mO3 && meson $(srcpath) -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mclang: dir_mclang
-	( cd $(buildmain)/mclang && CC=clang CXX=clang++ meson $(srcpath) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mclang && CC=clang CXX=clang++ meson $(srcpath) $(mesonconf) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
 
 $(mesonprefix)mclang32: dir_mclang32
-	( cd $(buildmain)/mclang32 && CC=clang CXX=clang++ meson $(srcpath) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mclang32 && CC=clang CXX=clang++ meson $(srcpath) $(mesonconf) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mclang31: dir_mclang31
-	( cd $(buildmain)/mclang31 && CC=clang CXX=clang++ meson $(srcpath) -Dack_experimental=true -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mclang31 && CC=clang CXX=clang++ meson $(srcpath) $(mesonconf) -Dack_experimental=true -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mweb: dir_mweb
-	( cd $(buildmain)/mweb && meson $(srcpath) -Ddebug=true -Dwerror=true -Dserver=freeciv-web -Dtools=[] -Djson-protocol=true -Dfcmp=cli $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mweb && meson $(srcpath) $(mesonconf) -Ddebug=true -Dwerror=true -Dserver=freeciv-web -Dtools=[] -Djson-protocol=true -Dfcmp=cli $$MEXTRA_CONFIG)
 
 $(mesonprefix)fcdb: dir_fcdb
-	( cd $(buildmain)/fcdb && meson $(srcpath) -Ddebug=true -Dwerror=true -Dfcdb=sqlite3,mariadb,odbc $$MEXTRA_CONFIG)
+	( cd $(buildmain)/fcdb && meson $(srcpath) $(mesonconf) -Ddebug=true -Dwerror=true -Dfcdb=sqlite3,mariadb,odbc $$MEXTRA_CONFIG)
