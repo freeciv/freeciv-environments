@@ -13,7 +13,7 @@ DOCKDIR="$1"
 
 cd "${MAINDIR}"
 
-OLDCOMMIT="$(cat ${BRANCH}.commit)"
+OLDCOMMIT="$(cat ${BRANCH}.nightly.commit)"
 
 rm -Rf "nbuild/${BRANCH}"
 
@@ -53,7 +53,7 @@ if ! mkdir -p "${MAINDIR}/nbuild/${BRANCH}/crosser" ; then
   exit 1
 fi
 
-echo "${COMMIT}" > "${MAINDIR}/${BRANCH}.commit"
+echo "${COMMIT}" > "${MAINDIR}/${BRANCH}.nightly.commit"
 
 SCOMMIT="$(git rev-parse --short HEAD)"
 
