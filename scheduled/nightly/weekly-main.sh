@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 BRANCH=main
 MAINDIR="$(cd $(dirname "$0") ; pwd)"
@@ -7,12 +7,12 @@ cd "${MAINDIR}"
 
 OLDCOMMIT="$(cat "${BRANCH}.weekly.commit")"
 
+rm -Rf "wbuild/${BRANCH}"
+
 if ! cd "${MAINDIR}/${BRANCH}" ; then
   echo "Failed to enter \"${MAINDIR}/${BRANCH}\"!" >&2
   exit 1
 fi
-
-rm -Rf docbuild
 
 git checkout translations
 git checkout ChangeLog
@@ -25,14 +25,18 @@ fi
 
 echo "${COMMIT}" > "${MAINDIR}/${BRANCH}.weekly.commit"
 
-if ! mkdir -p docbuild ; then
-  echo "Failed to create docbuild directory!" >&2
+if ! mkdir -p "${MAINDIR}/wbuild/${BRANCH}/doxygen" ; then
+  echo "Failed to create \"${MAINDIR}/wbuild/${BRANCH}/doxygen\"!" >&2
   exit 1
 fi
 
-cd docbuild
+if ! cd "${MAINDIR}/wbuild/${BRANCH}/doxygen" ; then
+  echo "Failed to enter \"${MAINDIR}/wbuild/${BRANCH}/doxygen\"!" >&2
+  exit 1
+fi
 
-if ! ../scripts/generate_doc.sh .. ; then
+if ! "${MAINDIR}/${BRANCH}/scripts/generate_doc.sh" "${MAINDIR}/${BRANCH}"
+then
   echo "Failed to generate documentation!" >&2
   exit 1
 fi
