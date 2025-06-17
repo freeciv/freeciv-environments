@@ -35,6 +35,13 @@ if ! cd "${MAINDIR}/wbuild/${BRANCH}/doxygen" ; then
   exit 1
 fi
 
+if ! meson setup "${MAINDIR}/${BRANCH}" ||
+   ! ninja
+then
+  echo "Freeciv build failed!" >&2
+  exit 1
+fi
+
 if ! "${MAINDIR}/${BRANCH}/scripts/generate_doc.sh" "${MAINDIR}/${BRANCH}"
 then
   echo "Failed to generate documentation!" >&2
