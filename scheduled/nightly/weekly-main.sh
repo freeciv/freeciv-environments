@@ -42,7 +42,7 @@ then
   exit 1
 fi
 
-if ! "${MAINDIR}/${BRANCH}/scripts/generate_doc.sh" "${MAINDIR}/${BRANCH}"
+if ! "${MAINDIR}/${BRANCH}/scripts/generate_doc.sh" "${MAINDIR}/${BRANCH}" .
 then
   echo "Failed to generate documentation!" >&2
   exit 1
