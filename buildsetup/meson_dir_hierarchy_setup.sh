@@ -4,7 +4,7 @@
 # - Does not create individual build directories, as we don't
 #   know which configurations user wants
 
-export STABLE_BRANCHES="S3_3 S3_2 S3_1"
+export STABLE_BRANCHES="S3_3 S3_2"
 export REPO_URL="https://github.com/freeciv/freeciv"
 
 prepare_branch_dir()
@@ -90,7 +90,3 @@ make_build_dir S3_3 qt5 "-Dqtver=qt5 -Ddebug=true -Dwerror=true -Dclients=gtk3.2
 make_build_dir S3_2 dev "-Ddebug=true -Dwerror=true -Dclients=gtk3.22,gtk4,qt,sdl2 -Dfcmp=cli,gtk3,gtk4,qt"
 make_build_dir S3_2 qt5 "-Dqtver=qt5 -Ddebug=true -Dwerror=true -Dclients=gtk3.22,gtk4,qt,sdl2 -Dfcmp=cli,gtk3,gtk4,qt"
 make_build_dir S3_2 rel "-Dbuildtype=release -Dclients=gtk3.22,gtk4,qt,sdl2 -Dfcmp=cli,gtk3,gtk4,qt"
-
-make_build_dir S3_1 dev "-Dack_experimental=true -Ddebug=true -Dwerror=true -Dclients=gtk3.22,gtk4,qt,sdl2 -Dfcmp=cli,gtk3,gtk4,qt"
-make_build_dir S3_1 qt5 "-Dack_experimental=true -Dqtver=qt5 -Ddebug=true -Dwerror=true -Dclients=gtk3.22,gtk4,qt,sdl2 -Dfcmp=cli,gtk3,gtk4,qt"
-make_build_dir S3_1 rel "-Dack_experimental=true -Dbuildtype=release -Dclients=gtk3.22,gtk4,qt,sdl2 -Dfcmp=cli,gtk3,gtk4,qt"
