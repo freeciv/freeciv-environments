@@ -66,11 +66,11 @@ $(configprefix)ndebug : dir_ndebug
 $(configprefix)ndebug_32 : dir_ndebug_32
 	( cd $(buildmain)/ndebug_32 && $(srcpath)/autogen.sh $(leg_defconf) --disable-debug --enable-gitrev --enable-client=all)
 
-$(configprefix)c23 : dir_c23
-	( cd $(buildmain)/c23 && $(srcpath)/autogen.sh $(defconf) CFLAGS="-std=c2x" CXXFLAGS="-std=c++23" --disable-debug --enable-gitrev --enable-client=all)
+$(configprefix)c2y : dir_c2y
+	( cd $(buildmain)/c2y && $(srcpath)/autogen.sh $(defconf) CFLAGS="-std=c2y" CXXFLAGS="-std=c++26" --disable-debug --enable-gitrev --enable-client=all)
 
-$(configprefix)c23_32 : dir_c23_32
-	( cd $(buildmain)/c23_32 && $(srcpath)/autogen.sh $(leg_defconf) CFLAGS="-std=c2x" CXXFLAGS="-std=c++23" --disable-debug --enable-gitrev --enable-client=all)
+$(configprefix)c2y_32 : dir_c2y_32
+	( cd $(buildmain)/c2y_32 && $(srcpath)/autogen.sh $(leg_defconf) CFLAGS="-std=c2y" CXXFLAGS="-std=c++26" --disable-debug --enable-gitrev --enable-client=all)
 
 $(configprefix)nonls : dir_nonls
 	( cd $(buildmain)/nonls && $(srcpath)/autogen.sh $(defconf) --enable-debug --disable-nls)
