@@ -2,6 +2,11 @@
 
 . ./input/crosser-ver.sh
 
+if test "$1" = "-h" || test "$1" = "--help" ; then
+  echo "Usage: $0 [src dir] [build dir]"
+  exit
+fi
+
 if test "$1" = "" ; then
   SRCDIR="$(pwd)/src/main"
 else
