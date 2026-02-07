@@ -14,6 +14,10 @@ else
 fi
 
 if test "$2" != "" ; then
+  if ! test -d "$2" ; then
+    echo "Build dir \"$2\" does not exist" >&2
+    exit 1
+  fi
   BUILDDIR="$(cd $2 || exit 1 ; pwd)"
 fi
 
