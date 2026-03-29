@@ -24,8 +24,8 @@ $(configprefix)gtk4_32 : dir_gtk4_32
 $(configprefix)gtk4x : dir_gtk4x
 	( cd $(buildmain)/gtk4x && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=gtk4x --enable-fcmp=gtk4x)
 
-$(configprefix)sdl2 : dir_sdl2
-	( cd $(buildmain)/sdl2 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=sdl2)
+$(configprefix)at_sdl2 : dir_at_sdl2
+	( cd $(buildmain)/at_sdl2 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=sdl2)
 
 $(configprefix)sdl2_32 : dir_sdl2_32
 	( cd $(buildmain)/sdl2_32 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-client=sdl2)
@@ -125,6 +125,9 @@ $(mesonprefix)sdl3: dir_sdl3
 
 $(mesonprefix)sdl3q: dir_sdl3q
 	( cd $(buildmain)/sdl3q && meson $(srcpath) $(mesonconf) -Ddebug=true -Dclients=sdl3 -Daudio=none $$MEXTRA_CONFIG)
+
+$(mesonprefix)sdl2: dir_sdl2
+	( cd $(buildmain)/sdl2 && meson $(srcpath) $(mesonconf) -Ddebug=true -Dclients=sdl2 -Daudio=sdl2 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mO3: dir_mO3
 	( cd $(buildmain)/mO3 && meson $(srcpath) -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
