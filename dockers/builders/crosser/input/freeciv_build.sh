@@ -2,6 +2,18 @@
 
 . /env/crosser-ver.sh
 
+export PATH="${PATH}:$(pwd)/bin"
+if ! mkdir bin ||
+   ! mkdir tolua ||
+   ! cd tolua ||
+   ! meson setup -Dserver=disabled -Dclients=[] -Dfcmp=[] -Dtools=[] -Daudio=none /freeciv ||
+   ! ninja ||
+   ! cp tolua ../bin/
+then
+  echo "Failed to build native tolua!" >&2
+  exit 1
+fi
+
 if test -d /build ; then
   cd /build
 
