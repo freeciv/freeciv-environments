@@ -1,7 +1,7 @@
 
 # Either latest Debian release, or latest Ubuntu LTS release,
 # which ever is newer.
-FROM ubuntu:noble
+FROM ubuntu:resolute
 
 MAINTAINER The Freeciv Project
 
