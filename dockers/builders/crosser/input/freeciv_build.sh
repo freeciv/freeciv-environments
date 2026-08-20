@@ -6,9 +6,7 @@ export PATH="${PATH}:$(pwd)/bin"
 if ! mkdir bin ||
    ! mkdir tolua ||
    ! cd tolua ||
-   ! meson setup -Dserver=disabled -Dclients=[] -Dfcmp=[] -Dtools=[] -Daudio=none /freeciv ||
-   ! ninja ||
-   ! cp tolua ../bin/
+   ! /freeciv/scripts/build_tolua.sh ../bin
 then
   echo "Failed to build native tolua!" >&2
   exit 1
