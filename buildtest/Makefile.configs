@@ -112,7 +112,7 @@ $(mesonprefix)mall_33: dir_mall_33
 	( cd $(buildmain)/mall_33 && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mall: dir_mall
-	( cd $(buildmain)/mall && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mall && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dclients=gtk4,sdl3,qt,gtk3.22,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x -Daudio=sdl3 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mqt5: dir_mqt5
 	( cd $(buildmain)/mqt5 && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dqtver=qt5 -Dclients=gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
