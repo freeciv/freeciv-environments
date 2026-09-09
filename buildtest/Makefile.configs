@@ -51,8 +51,8 @@ $(configprefix)qt6 : dir_qt6
 $(configprefix)qt6_32 : dir_qt6_32
 	( cd $(buildmain)/qt6_32 && $(srcpath)/autogen.sh $(leg_defconf) --enable-debug --enable-client=qt --enable-fcmp=qt --with-qtver=qt6)
 
-$(configprefix)qt7 : dir_qt7
-	( cd $(buildmain)/qt7 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=qt --enable-fcmp=qt --with-qtver=qt6x)
+$(configprefix)at_qt7 : dir_at_qt7
+	( cd $(buildmain)/at_qt7 && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-client=qt --enable-fcmp=qt --with-qtver=qt6x)
 
 $(configprefix)auth : dir_auth
 	( cd $(buildmain)/auth && $(srcpath)/autogen.sh $(defconf) --enable-debug --enable-fcdb=sqlite3,mysql )
