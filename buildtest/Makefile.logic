@@ -13,13 +13,13 @@ fullprefix = full_
 ncleanprefix = nclean_
 mtestprefix = mtest_
 
-builds += $(forcebuilds)
+at_builds += $(builds)
 
-buildrules = $(addprefix $(buildprefix), $(builds))
+buildrules = $(addprefix $(buildprefix), $(at_builds))
 
-configrules = $(addprefix $(configprefix), $(builds))
-bothrules = $(addprefix $(bothprefix), $(builds))
-testrules = $(addprefix $(testprefix), $(builds))
+configrules = $(addprefix $(configprefix), $(at_builds))
+bothrules = $(addprefix $(bothprefix), $(at_builds))
+testrules = $(addprefix $(testprefix), $(at_builds))
 
 ninjarules = $(addprefix $(ninjaprefix), $(mesonbuilds))
 
