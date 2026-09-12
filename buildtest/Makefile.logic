@@ -66,7 +66,7 @@ $(testprefix)% :
 
 $(mtestprefix)% :
 	@echo "== Building $* =="
-	@( export MEXTRA_CONFIG="-Dwerror=true" ; echo -n "$(branch) : $(GITREV) : $* : " ; BUILTTIME="$$(date +'%d.%m.%y %H:%M')" ; if $(MAKE) $(fullprefix)$* >/dev/null ; then echo -n Success ; else export MEXTRA_CONFIG="" ; if $(MAKE) $(fullprefix)$* >/dev/null ; then echo -n Warnings ; else echo -n FAILURE ; fi ; fi ; echo " : $$BUILTTIME" ) >> $(logfile)
+	@( export MEXTRA_CONFIG="-Dwerror=true" ; echo -n "$(branch) : $(GITREV) : $* : " ; BUILTTIME="$$(date +'%d.%m.%y %H:%M')" ; if $(MAKE) $(fullprefix)$* >/dev/null ; then echo -n Success ; else export MEXTRA_CONFIG="-Dwerror=false" ; if $(MAKE) $(fullprefix)$* >/dev/null ; then echo -n Warnings ; else echo -n FAILURE ; fi ; fi ; echo " : $$BUILTTIME" ) >> $(logfile)
 
 wrap_test : $(testrules) $(mtestrules)
 
