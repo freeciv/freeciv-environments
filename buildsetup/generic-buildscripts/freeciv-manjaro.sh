@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Linux Manjaro version 1.15"
+  echo "Freeciv build script for Linux Manjaro version 1.16"
   exit
 fi
 
 if test "$1" = "" || test "$2" = "" ||
    test "$1" = "-h" || test "$1" = "--help" ; then
   echo "Usage: $0 <release> <gui> [main dir=freeciv-genbuild] [download URL]"
-  echo "Supported releases are those of 2.6, 3.0, 3.1, 3.2, and 3.3 major versions"
+  echo "Supported releases are those of 2.6, 3.0, 3.1, 3.2, 3.3, and 3.4 major versions"
   echo "Supported guis are 'gtk2', 'gtk3.22', 'gtk3', 'gtk4', 'qt', 'sdl2', and 'sdl3'"
   echo "URL must point either to tar.bz2 or tar.xz package"
   exit
@@ -34,7 +34,8 @@ if test "$FREECIV_MAJMIN" != "2.6" &&
    test "$FREECIV_MAJMIN" != "3.0" &&
    test "$FREECIV_MAJMIN" != "3.1" &&
    test "$FREECIV_MAJMIN" != "3.2" &&
-   test "$FREECIV_MAJMIN" != "3.3" ; then
+   test "$FREECIV_MAJMIN" != "3.3" &&
+   test "$FREECIV_MAJMIN" != "3.4" ; then
   echo "Release '$REL' from unsupported branch. See '$0 --help' for supported options" >&2
   exit 1
 fi
