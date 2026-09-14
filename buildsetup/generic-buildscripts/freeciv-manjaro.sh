@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if test "$1" = "-v" || test "$1" = "--version" ; then
-  echo "Freeciv build script for Linux Manjaro version 1.14"
+  echo "Freeciv build script for Linux Manjaro version 1.15"
   exit
 fi
 
@@ -9,7 +9,7 @@ if test "$1" = "" || test "$2" = "" ||
    test "$1" = "-h" || test "$1" = "--help" ; then
   echo "Usage: $0 <release> <gui> [main dir=freeciv-genbuild] [download URL]"
   echo "Supported releases are those of 2.6, 3.0, 3.1, 3.2, and 3.3 major versions"
-  echo "Supported guis are 'gtk2', 'gtk3.22', 'gtk3', 'gtk4', 'qt', and 'sdl2'"
+  echo "Supported guis are 'gtk2', 'gtk3.22', 'gtk3', 'gtk4', 'qt', 'sdl2', and 'sdl3'"
   echo "URL must point either to tar.bz2 or tar.xz package"
   exit
 fi
@@ -44,7 +44,8 @@ if test "$GUI" != "gtk3.22" &&
    test "$GUI" != "gtk2" &&
    test "$GUI" != "gtk4" &&
    test "$GUI" != "qt" &&
-   test "$GUI" != "sdl2" ; then
+   test "$GUI" != "sdl2" &&
+   test "$GUI" != "sdl3" ; then
   echo "Unsupported gui '$GUI' given. See '$0 --help' for supported options" >&2
   exit 1
 fi
@@ -74,6 +75,15 @@ if test "$GUI" = "gtk4" ; then
   fi
 fi
 
+if test "$GUI" = "sdl3" ; then
+  if test "$FREECIV_MAJMIN" = "2.6" ||
+     test "$FREECIV_MAJMIN" = "3.0" ||
+     test "$FREECIV_MAJMIN" = "3.1" ; then
+    echo "sdl3 is not supported gui for freeciv-3.1 or earlier" >&2
+    exit 1
+  fi
+fi
+
 echo "Install requirements (y/n)?"
 echo "You need them, so answer 'n' only if you have them already"
 echo "in place."
@@ -90,7 +100,7 @@ done
 if test "$req_install" != "n" ; then
 echo "Installing requirements"
 sudo pacman -Su --needed \
-  gcc make sdl2_mixer pkg-config meson gtk4 sdl2_image sdl2_ttf sdl2_gfx
+  gcc make sdl2_mixer pkg-config meson gtk4 sdl2_image sdl2_ttf sdl2_gfx sdl3_mixer sdl3_image sdl3_ttf
 fi
 
 if test -d "$MAINDIR" ; then
@@ -190,6 +200,12 @@ else
   FCMP="gtk3"
 fi
 
+if test "$GUI" = "sdl3" ; then
+  AUDIO="sdl3"
+else
+  AUDIO="sdl2"
+fi
+
 if test "$FREECIV_MAJMIN" = "2.6" ||
    test "$FREECIV_MAJMIN" = "3.0" ||
    test "$FREECIV_MAJMIN" = "3.1" ; then
@@ -212,7 +228,7 @@ if test "$FREECIV_MAJMIN" = "2.6" ||
   fi
 else
   echo "meson"
-  if ! meson setup ../../freeciv-$REL -Ddefault_library=static -Dprefix=$FREECIV_MAINDIR/install-$REL/$GUI -Dclients=$GUI -Dfcmp=$FCMP ; then
+  if ! meson setup ../../freeciv-$REL -Ddefault_library=static -Dprefix=$FREECIV_MAINDIR/install-$REL/$GUI -Dclients=$GUI -Dfcmp=$FCMP -Daudio=$AUDIO ; then
     echo "Meson failed" >&2
     exit 1
   fi
