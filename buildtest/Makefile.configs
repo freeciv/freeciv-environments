@@ -117,6 +117,9 @@ $(mesonprefix)mall: dir_mall
 $(mesonprefix)sdl2all: dir_sdl2all
 	( cd $(buildmain)/sdl2all && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x -Daudio=sdl2 $$MEXTRA_CONFIG)
 
+$(mesonprefix)rel: dir_rel
+	( cd $(buildmain)/rel && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=false -Dclients=gtk4,sdl3,qt,gtk3.22,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x -Daudio=sdl3 -Dbuildtype=release $$MEXTRA_CONFIG)
+
 $(mesonprefix)mqt5: dir_mqt5
 	( cd $(buildmain)/mqt5 && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dqtver=qt5 -Dclients=gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
