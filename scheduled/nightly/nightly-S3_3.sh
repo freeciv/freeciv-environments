@@ -61,7 +61,7 @@ if ! cd "${MAINDIR}/nbuild/${BRANCH}/flatpak" ; then
   exit 1
 fi
 
-"${MAINDIR}/${BRANCH}/platforms/flatpak/build_flatpak.sh"
+"${MAINDIR}/${BRANCH}/platforms/flatpak/build_flatpaks.sh"
 
 ls -1 *.flatpak | (while read OFPF ; do NFPF=$(echo "${OFPF}" | sed "s/.flatpak/-${SCOMMIT}.flatpak/") ; mv "${OFPF}" "${NFPF}" ; done )
 
