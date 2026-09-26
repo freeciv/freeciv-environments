@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Script to be placed on build directory in the testing environment.
+# Requires also a "gamelist.txt" list of testgames (.serv files) to run
+
+FREECIV_ROOT=/fast/freeciv
+BRANCH=S3_4
+PORT=5436
+
+export FREECIV_DATA_PATH=$FREECIV_ROOT/rulesets/svn/$BRANCH/data:$FREECIV_ROOT/fcmodpacks/$BRANCH/data:$FREECIV_ROOT/rulesets/3rd/$BRANCH/data:.:../src/data
+
+cat gamelist.txt | ../../freeciv-environments/testing/testloop.sh "" "$PORT"
