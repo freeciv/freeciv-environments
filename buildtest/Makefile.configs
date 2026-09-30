@@ -111,6 +111,9 @@ $(mesonprefix)mO331: dir_mO331
 $(mesonprefix)mall_33: dir_mall_33
 	( cd $(buildmain)/mall_33 && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dclients=gtk4,sdl2,qt,gtk3.22,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
+$(mesonprefix)rel_33: dir_rel_33
+	( cd $(buildmain)/rel_33 && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=false -Dclients=gtk4,sdl2,qt,gtk3.22,stub -Dfcmp=cli,gtk3,qt,gtk4 -Dbuildtype=release $$MEXTRA_CONFIG)
+
 $(mesonprefix)mall: dir_mall
 	( cd $(buildmain)/mall && meson setup $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dclients=gtk4,sdl3,qt,gtk3.22,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x -Daudio=sdl3 $$MEXTRA_CONFIG)
 
