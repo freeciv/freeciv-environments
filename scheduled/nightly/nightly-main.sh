@@ -97,9 +97,13 @@ if ! cd "${MAINDIR}/${BRANCH}/translations" ; then
   exit 1
 fi
 
-./stats.sh > "${MAINDIR}/nightly/${BRANCH}/translations/stats.txt"
+if ! ./update_po.sh ||
+   ! ./stats.sh > "${MAINDIR}/nightly/${BRANCH}/translations/stats.txt"
+then
+  echo "Failed to generate translation statistics!" >&2
+fi
 
-cd "$MAINDIR"
+cd "${MAINDIR}"
 declare -i BNBR
 if ! test -f ${BRANCH}.build ; then
   BNBR=1
