@@ -135,8 +135,11 @@ $(mesonprefix)sdl3: dir_sdl3
 $(mesonprefix)sdl2: dir_sdl2
 	( cd $(buildmain)/sdl2 && meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dclients=sdl2 -Daudio=sdl2 $$MEXTRA_CONFIG)
 
-$(mesonprefix)mO3: dir_mO3
-	( cd $(buildmain)/mO3 && meson setup --wipe $(srcpath) && meson configure -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+$(mesonprefix)O3: dir_O3
+	( cd $(buildmain)/O3 && meson setup --wipe $(srcpath) && meson configure -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl3,qt,gtk4 -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
+
+$(mesonprefix)O3_33: dir_O3_33
+	( cd $(buildmain)/O3_33 && meson setup --wipe $(srcpath) && meson configure -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mclang: dir_mclang
 	( cd $(buildmain)/mclang && CC=clang CXX=clang++ meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
