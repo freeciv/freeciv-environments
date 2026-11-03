@@ -142,7 +142,7 @@ $(mesonprefix)O3_33: dir_O3_33
 	( cd $(buildmain)/O3_33 && meson setup --wipe $(srcpath) && meson configure -Doptimization=3 -Ddebug=true -Dclients=gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mclang: dir_mclang
-	( cd $(buildmain)/mclang && CC=clang CXX=clang++ meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mclang && CC=clang CXX=clang++ meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl3,qt,gtk4x,stub -Dfcmp=cli,gtk3,qt,gtk4,gtk4x $$MEXTRA_CONFIG)
 
 $(mesonprefix)mclang_33: dir_mclang_33
 	( cd $(buildmain)/mclang_33 && CC=clang CXX=clang++ meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt,stub -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
