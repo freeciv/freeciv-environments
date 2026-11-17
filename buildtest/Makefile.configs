@@ -151,7 +151,7 @@ $(mesonprefix)mclang31: dir_mclang31
 	( cd $(buildmain)/mclang31 && CC=clang CXX=clang++ meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Dack_experimental=true -Ddebug=true -Dwerror=true -Dclients=gtk4,gtk3.22,sdl2,qt -Dfcmp=cli,gtk3,qt,gtk4 $$MEXTRA_CONFIG)
 
 $(mesonprefix)mweb: dir_mweb
-	( cd $(buildmain)/mweb && meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dwerror=true -Dserver=freeciv-web -Dtools=[] -Djson-protocol=true -Dfcmp=cli $$MEXTRA_CONFIG)
+	( cd $(buildmain)/mweb && meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dwerror=true -Dserver=freeciv-web -Daudio=none -Dtools=[] -Djson-protocol=true -Dfcmp=cli $$MEXTRA_CONFIG)
 
 $(mesonprefix)fcdb: dir_fcdb
-	( cd $(buildmain)/fcdb && meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dwerror=true -Dfcdb=sqlite3,mariadb,odbc $$MEXTRA_CONFIG)
+	( cd $(buildmain)/fcdb && meson setup --wipe $(srcpath) && meson configure $(mesonconf) -Ddebug=true -Dwerror=true -Dfcdb=sqlite3,mariadb,odbc -Daudio=none $$MEXTRA_CONFIG)
